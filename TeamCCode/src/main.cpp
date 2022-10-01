@@ -66,7 +66,14 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	roller.spin();
+	delay(300);
+	driveTrain.tankDrive(-30, -30);
+	delay(5.00);
+	driveTrain.tankDrive(0, 0);
+	roller.stop();
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -90,7 +97,7 @@ void opcontrol() {
 		if(master.get_digital(DIGITAL_R1)){
 			roller.spin();
 		}
-		else if(master.get_digital(DIGITAL_R1))
+		else if(master.get_digital(DIGITAL_R2))
 		{
 			roller.spinOpp();
 		}
