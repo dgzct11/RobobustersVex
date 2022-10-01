@@ -9,11 +9,13 @@ class Roller{
     }
     void spin()
     {
+        rollerMotor.set_reversed(false);
         rollerMotor.move(ROLLER_VOLTAGE);
     }
     void spinOpp()
     {
-        rollerMotor.move(-ROLLER_VOLTAGE);
+        rollerMotor.set_reversed(true);
+        rollerMotor.move(ROLLER_VOLTAGE);
     }
     void stop()
     {
