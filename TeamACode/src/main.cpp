@@ -65,14 +65,10 @@ void competition_initialize() {}
  */
 void autonomous() {
 	drivetrain.tankDrive(15, 15);
-	delay(1000);
 	roller.spin(127);
-	delay(1000);
+	delay(500);
 	drivetrain.tankDrive(0, 0);
 	roller.stop();
-	//forward 
-	//roll for
-	//stop
 }
 
 /**
