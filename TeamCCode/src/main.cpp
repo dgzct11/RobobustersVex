@@ -1,10 +1,13 @@
 #include "main.h"
 #include "DriveTrain.h"
 #include "Roller.h"
+#include "Whip.h"
 #include "pros/misc.h"
 
 DriveTrain driveTrain;
 Roller roller;
+Whip whip;
+
 //LEFT_BACK_PORT
 /**
  * A callback function for LLEMU's center button.
@@ -67,10 +70,9 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	roller.spin();
+	driveTrain.tankDrive(-75, -75);
 	delay(300);
-	driveTrain.tankDrive(-30, -30);
-	delay(5.00);
+	roller.spin();
 	driveTrain.tankDrive(0, 0);
 	roller.stop();
 }
@@ -105,6 +107,13 @@ void opcontrol() {
 		{
 			roller.stop();
 		}
+		if(master.get_digital(DIGITAL_L1)){
+			whip.whip();
+		}
+		else {
+			whip.noWhip();
+		}
+		
 
 		
 		pros::delay(20);
