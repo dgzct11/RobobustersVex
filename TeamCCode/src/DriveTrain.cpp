@@ -18,10 +18,11 @@ class DriveTrain{
         rightMotor.set_reversed(true);
     }
     void tankDrive(int leftY, int rightY){
-        leftMotor.move(voltage: leftY);
-        rightMotor.move(voltage: rightY);
+        leftMotor.move( leftY);
+        rightMotor.move( rightY);
     }
-    void arcadeDrive(int leftx, int rightY){
-
+    void arcadeDrive(int leftY, int rightX){
+        leftMotor.move(leftY + rightX);
+        rightMotor.move(leftY - rightX);
     }
 };
