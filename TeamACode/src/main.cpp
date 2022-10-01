@@ -1,4 +1,9 @@
 #include "main.h"
+#include "Drivetrain.h"
+#include "pros/misc.h"
+#include "Roller.h";
+Drivetrain drivetrain;
+Roller roller;
 
 /**
  * A callback function for LLEMU's center button.
@@ -58,7 +63,17 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	drivetrain.tankDrive(15, 15);
+	delay(1000);
+	roller.spin(127);
+	delay(1000);
+	drivetrain.tankDrive(0, 0);
+	roller.stop();
+	//forward 
+	//roll for
+	//stop
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -74,20 +89,8 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	Drivetrain drivetrain;
-	
-	pros::Motor left_mtr(1);
-	pros::Motor right_mtr(2);
-
+	Controller master (CONTROLLER_MASTER);
 	while (true) {
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
-		int left = master.get_analog(ANALOG_LEFT_Y);
-		int right = master.get_analog(ANALOG_RIGHT_Y);
-
-		left_mtr = left;
-		right_mtr = right;
-		pros::delay(20);
+		drivetrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 	}
 }
