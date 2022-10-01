@@ -88,5 +88,12 @@ void opcontrol() {
 	Controller master (CONTROLLER_MASTER);
 	while (true) {
 		drivetrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
+		{
+			roller.spin(127);
+		}
+		else {
+			roller.stop();
+		}
 	}
 }

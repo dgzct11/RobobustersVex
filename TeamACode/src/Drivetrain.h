@@ -19,7 +19,7 @@ class Drivetrain{
     Motor_Group leftMotor = Motor_Group({leftFront, leftBack});;
     Motor_Group rightMotor = Motor_Group({leftFront, rightFront});
     Drivetrain(){
-        rightMotor.set_reversed(true);
+        leftMotor.set_reversed(true);
     }
 
     void tankDrive(int leftY, int rightY)
