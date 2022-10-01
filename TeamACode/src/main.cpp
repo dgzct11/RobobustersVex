@@ -1,7 +1,10 @@
 #include "main.h"
 #include "Drivetrain.h"
 #include "pros/misc.h"
-#include "Roller.h";
+#include "Roller.h"
+#include <string.h>
+#include <string>
+
 Drivetrain drivetrain;
 Roller roller;
 
@@ -97,5 +100,7 @@ void opcontrol() {
 		else {
 			roller.stop();
 		}
+		drivetrain.update();
+		lcd::set_text(1, ("Left Encoder "+std::to_string(drivetrain.leftEncoder)+" Right Encoder"+std::to_string(drivetrain.rightEncoder)+"\n x " + std::to_string(drivetrain.x) + "y" + std::to_string(drivetrain.y)+" theta "+ std::to_string(drivetrain.theta)));
 	}
 }
