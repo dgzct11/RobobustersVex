@@ -32,6 +32,7 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+
 }
 
 /**
@@ -88,7 +89,7 @@ void autonomous() {
 void opcontrol() {
 	Controller master (CONTROLLER_MASTER);
 	while (true) {
-		drivetrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+		drivetrain.arcadeDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
 		{
 			roller.spin(127);
