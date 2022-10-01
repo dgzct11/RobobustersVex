@@ -4,6 +4,7 @@ extern int LEFT_BACK_PORT;
 extern int LEFT_FRONT_PORT;
 extern int RIGHT_BACK_PORT;
 extern int RIGHT_FRONT_PORT;
+extern double ROBOT_LENGTH;
 using namespace pros;
 class Drivetrain{
     
@@ -56,7 +57,6 @@ class Drivetrain{
         y = 0;
         theta = 0;
     }
-    /*
     void update()
     {
         double newLeft = leftFront.get_encoder_units();
@@ -73,15 +73,69 @@ class Drivetrain{
         }
         else if((changeLeft > 0 && changeRight > 0) || (changeRight < 0 && changeLeft < 0))
         {
-            
+            double m;
+            double R;
+            //turn Right
+            if(abs(changeLeft) < abs(changeRight))
+            {
+                double temp = changeLeft;
+                changeLeft = changeRight;
+                changeRight = temp;
+            }
+            //turn left
+            R = ROBOT_LENGTH / (1 - (changeRight / changeLeft));
+            m = R - (ROBOT_LENGTH / 2);
+                double x1 = cos(theta) * m;
+                double y1 = sin(theta) * m;
+                theta -= changeLeft / R;
+                double x2 = cos(theta) * m;
+                double y2 = sin(theta) * m;
+                x += x2 - x1;
+                y += y2 - y1;
+            return;
         }
         else if(changeLeft == 0 || changeRight == 0)
         {
+            double dtheta;
+            if(changeLeft > 0)
+            {
+                dtheta = changeLeft / ROBOT_LENGTH;
 
+            }
+            else
+            {
+                dtheta = changeRight / ROBOT_LENGTH;
+            }
+            double x1 = cos(theta) * ROBOT_LENGTH;
+            double y1 = sin(theta) * ROBOT_LENGTH;
+            theta += dtheta;
+            double x2 = cos(theta) * ROBOT_LENGTH;
+            double y2 = sin(theta) * ROBOT_LENGTH;
+            x += x2 - x1;
+            y += y2 - y1;
+            return;
         }
         else {
-        
+            double m;
+            double Rright = ROBOT_LENGTH / (1 + fabs(changeRight / changeLeft));
+            double Rleft = ROBOT_LENGTH - Rright;
+            if(Rright > Rleft)
+            {
+                double m = Rright - (ROBOT_LENGTH / 2);
+            }
+            else
+            {
+                double m = Rleft - (ROBOT_LENGTH / 2);
+            }
+            double x1 = cos(theta) * m;
+            double y1 = sin(theta) * m;
+            theta += Rright / changeRight;
+            double x2 = cos(theta) * m;
+            double y2 = sin(theta) * m;
+            x += x2 - x1;
+            y += y2 - y1;
+            return;
         }
     }
-    */
+
 };
