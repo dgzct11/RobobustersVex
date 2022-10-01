@@ -25,25 +25,21 @@ class DriveTrain{
         rightMotor.move( rightY);
         if(!overThreshhold(leftY))
         {
-            stop(&leftMotor);
+            leftMotor.move_velocity(0);
         }
         if(!overThreshhold(rightY))
         {
-            stop(&rightMotor);
+           rightMotor.move_velocity(0);
         }
     }
     void arcadeDrive(int leftY, int rightX){
         leftMotor.move(leftY + rightX);
         rightMotor.move(leftY - rightX);
     }
-    void stop(Motor_Group *motor)
-    {
-        (*motor).move_velocity(0);
-    }
-
+    
     bool overThreshhold(int value)
     {
         
-        return (abs(value)>1);
+        return (abs(value)>=1);
     }
 };
