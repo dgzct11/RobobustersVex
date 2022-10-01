@@ -64,7 +64,8 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	drivetrain.tankDrive(15, 15);
+	drivetrain.tankDrive(30, 30);
+	delay(250);
 	roller.spin(127);
 	delay(500);
 	drivetrain.tankDrive(0, 0);
