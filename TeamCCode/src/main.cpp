@@ -86,9 +86,13 @@ void opcontrol() {
 	
 
 	while (true) {
-		driveTrain.arcadeDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 		if(master.get_digital(DIGITAL_R1)){
 			roller.spin();
+		}
+		else if(master.get_digital(DIGITAL_R1))
+		{
+			roller.spinOpp();
 		}
 		else
 		{

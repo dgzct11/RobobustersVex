@@ -11,7 +11,12 @@ class Roller{
     {
         rollerMotor.move(ROLLER_VOLTAGE);
     }
-    void stop(){
+    void spinOpp()
+    {
+        rollerMotor.move(-ROLLER_VOLTAGE);
+    }
+    void stop()
+    {
         rollerMotor.move_velocity(0);
     }
 };

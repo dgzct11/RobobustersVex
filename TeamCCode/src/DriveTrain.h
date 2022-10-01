@@ -15,14 +15,35 @@ class DriveTrain{
     Motor_Group rightMotor = Motor_Group({rightFront, rightBack});
 
     DriveTrain(){
-        rightMotor.set_reversed(true);
+        leftMotor.set_reversed(true);
+        leftMotor.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+        rightMotor.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+
     }
     void tankDrive(int leftY, int rightY){
         leftMotor.move( leftY);
         rightMotor.move( rightY);
+        if(!overThreshhold(leftY))
+        {
+            stop(&leftMotor);
+        }
+        if(!overThreshhold(rightY))
+        {
+            stop(&rightMotor);
+        }
     }
     void arcadeDrive(int leftY, int rightX){
         leftMotor.move(leftY + rightX);
         rightMotor.move(leftY - rightX);
+    }
+    void stop(Motor_Group *motor)
+    {
+        (*motor).move_velocity(0);
+    }
+
+    bool overThreshhold(int value)
+    {
+        
+        return (abs(value)>1);
     }
 };
