@@ -39,7 +39,6 @@ class DriveTrain{
     
     bool overThreshhold(int value)
     {
-        
         return (abs(value)>=1);
     }
-};
+};  

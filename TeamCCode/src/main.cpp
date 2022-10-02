@@ -1,10 +1,13 @@
 #include "main.h"
 #include "DriveTrain.h"
 #include "Roller.h"
+#include "Whip.h"
 #include "pros/misc.h"
 
 DriveTrain driveTrain;
 Roller roller;
+Whip whip;
+
 //LEFT_BACK_PORT
 /**
  * A callback function for LLEMU's center button.
@@ -66,7 +69,13 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	driveTrain.tankDrive(-75, -75);
+	delay(300);
+	roller.spin();
+	driveTrain.tankDrive(0, 0);
+	roller.stop();
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -90,7 +99,7 @@ void opcontrol() {
 		if(master.get_digital(DIGITAL_R1)){
 			roller.spin();
 		}
-		else if(master.get_digital(DIGITAL_R1))
+		else if(master.get_digital(DIGITAL_R2))
 		{
 			roller.spinOpp();
 		}
@@ -98,6 +107,13 @@ void opcontrol() {
 		{
 			roller.stop();
 		}
+		if(master.get_digital(DIGITAL_L1)){
+			whip.whip();
+		}
+		else {
+			whip.noWhip();
+		}
+		
 
 		
 		pros::delay(20);
