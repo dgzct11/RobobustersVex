@@ -4,9 +4,8 @@
 
 
 using namespace pros;
-
+extern int ROLLER_MOTOR_PORT;
 class Roller{
-    int ROLLER_MOTOR_PORT = 5;  
     public:
     Motor roller = Motor(ROLLER_MOTOR_PORT);
    

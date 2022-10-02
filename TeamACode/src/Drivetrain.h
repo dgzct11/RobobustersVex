@@ -76,7 +76,7 @@ class Drivetrain{
             double m;
             double R;
             //turn Right
-            if(abs(changeLeft) < abs(changeRight))
+            if(fabs(changeLeft) < fabs(changeRight))
             {
                 double temp = changeLeft;
                 changeLeft = changeRight;
