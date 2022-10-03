@@ -1,6 +1,5 @@
 #include "main.h"
 #include "Drivetrain.h"
-#include "pros/misc.h"
 #include "Roller.h"
 #include <string.h>
 #include <string>
@@ -70,9 +69,9 @@ void competition_initialize() {}
 void autonomous() {
 	roller.spin(127);
 	delay(300);
-	drivetrain.tankDrive(30, 30);
+	drivetrain.move(30);
 	delay(250);
-	drivetrain.tankDrive(0, 0);
+	drivetrain.move(0);
 	roller.stop();
 }
 
@@ -92,7 +91,7 @@ void autonomous() {
 void opcontrol() {
 	Controller master (CONTROLLER_MASTER);
 	while (true) {
-		drivetrain.arcadeDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
+		drivetrain.update(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
 		{
 			roller.spin(127);
@@ -104,7 +103,7 @@ void opcontrol() {
 		else {
 			roller.stop();
 		}
-		//drivetrain.update();
+		drivetrain.odomTick();
 		//lcd::set_text(1, ("Left Encoder "+std::to_string(drivetrain.leftEncoder)+" Right Encoder"+std::to_string(drivetrain.rightEncoder)+"\n x " + std::to_string(drivetrain.x) + "y" + std::to_string(drivetrain.y)+" theta "+ std::to_string(drivetrain.theta)));
 	}
 }

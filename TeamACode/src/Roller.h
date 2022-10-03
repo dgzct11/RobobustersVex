@@ -1,7 +1,4 @@
 #include "main.h"
-#include "pros/motors.h"
-#include "pros/motors.hpp"
-
 
 using namespace pros;
 extern int ROLLER_MOTOR_PORT;
@@ -22,10 +19,7 @@ class Roller{
         roller.move(0);
     }
 
-
-
-
-
-
-
+    void step(){
+	roller.move_relative(45,127);
+    }
 };

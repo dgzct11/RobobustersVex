@@ -1,5 +1,5 @@
 #include "main.h"
-#include "pros/motors.hpp"
+#include "utils.cpp"
 extern int LEFT_BACK_PORT;
 extern int LEFT_FRONT_PORT;
 extern int RIGHT_BACK_PORT;
@@ -13,98 +13,77 @@ class Drivetrain{
     Motor leftFront = Motor(LEFT_FRONT_PORT);
     Motor rightBack = Motor(RIGHT_FRONT_PORT);
     Motor rightFront = Motor(RIGHT_BACK_PORT);
-    Motor_Group leftMotor = Motor_Group({leftFront, leftBack});
-    Motor_Group rightMotor = Motor_Group({rightFront, rightBack});
+    Motor_Group left = Motor_Group({leftFront, leftBack});
+    Motor_Group right = Motor_Group({rightFront, rightBack});
+    Drive drivetrain;
     double x;
     double y;
     double theta;
-    int leftEncoder;
-    int rightEncoder;
 
-    Drivetrain(){
-        leftMotor.set_reversed(true);
-        leftMotor.set_brake_modes(E_MOTOR_BRAKE_HOLD);
-        rightMotor.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+    double leftEncoder = left.get_positions();
+    double rightEncoder = right.get_positions();
 
-    }
-    void tankDrive(int leftY, int rightY){
-        leftMotor.move( leftY);
-        rightMotor.move( rightY);
-        if(!overThreshhold(leftY))
-        {
-            leftMotor.move_velocity(0);
-        }
-        if(!overThreshhold(rightY))
-        {
-           rightMotor.move_velocity(0);
-        }
-    }
-    void arcadeDrive(int leftY, int rightX){
-        leftMotor.move(leftY + rightX);
-        rightMotor.move(leftY - rightX);
+    Drivetrain(Drive drivetrain) : drivetrain(drivetrain){
+        left.set_reversed(true);
+        left.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+        right.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+
     }
     
-    bool overThreshhold(int value)
+    bool overThreshhold(double value)
     {
         
-        return (abs(value)>=1);
+        return (fabs(value)>=1);
     }
-    void setOdometry()
+
+    void odomTick()
     {
-        leftEncoder = leftFront.get_encoder_units();
-        rightEncoder = rightFront.get_encoder_units();
-        x = 0;
-        y = 0;
-        theta = 0;
-    }
-    void update()
-    {
-        double newLeft = leftFront.get_encoder_units();
-        double newRight = rightFront.get_encoder_units();
-        double changeLeft = newLeft - leftEncoder;
-        double changeRight = newRight - rightEncoder;
+        double newLeft = left.get_encoder_units();
+        double newRight = right.get_encoder_units();
+        double deltaLeft = newLeft - leftEncoder;
+        double deltaRight= newRight - rightEncoder;
         leftEncoder = newLeft;
         rightEncoder = newRight;
-        if(changeLeft == changeRight)
+        if(deltaLeft == deltaRight)
         {
-            y += sin(theta) * changeLeft;
-            x += cos(theta) * changeRight;
+            y += sin(theta) * deltaLeft;
+            x += cos(theta) * deltaRight;
             return;
         }
-        else if((changeLeft > 0 && changeRight > 0) || (changeRight < 0 && changeLeft < 0))
+        else if((deltaLeft > 0 && deltaRight > 0) || (deltaRight < 0 && deltaLeft < 0))
         {
             double m;
             double R;
             //turn Right
-            if(fabs(changeLeft) < fabs(changeRight))
+            if(fabs(deltaLeft) < fabs(deltaRight))
             {
-                double temp = changeLeft;
-                changeLeft = changeRight;
-                changeRight = temp;
+                double temp = deltaLeft;
+                deltaLeft = deltaRight;
+                deltaRight = temp;
             }
             //turn left
-            R = ROBOT_LENGTH / (1 - (changeRight / changeLeft));
+            R = ROBOT_LENGTH / (1 - (deltaRight / deltaLeft));
             m = R - (ROBOT_LENGTH / 2);
                 double x1 = cos(theta) * m;
                 double y1 = sin(theta) * m;
-                theta -= changeLeft / R;
+                theta -= deltaLeft / R;
                 double x2 = cos(theta) * m;
                 double y2 = sin(theta) * m;
                 x += x2 - x1;
                 y += y2 - y1;
             return;
         }
-        else if(changeLeft == 0 || changeRight == 0)
+        else if(deltaLeft == 0 || deltaRight == 0)
         {
             double dtheta;
             if(changeLeft > 0)
             {
-                dtheta = changeLeft / ROBOT_LENGTH;
+                dtheta = deltaLeft / ROBOT_LENGTH;
 
             }
             else
             {
-                dtheta = changeRight / ROBOT_LENGTH;
+                dtheta = deltaRight / ROBOT_LENGTH;
             }
             double x1 = cos(theta) * ROBOT_LENGTH;
             double y1 = sin(theta) * ROBOT_LENGTH;
@@ -117,7 +96,7 @@ class Drivetrain{
         }
         else {
             double m;
-            double Rright = ROBOT_LENGTH / (1 + fabs(changeRight / changeLeft));
+            double Rright = ROBOT_LENGTH / (1 + fabs(deltaRight / deltaLeft));
             double Rleft = ROBOT_LENGTH - Rright;
             if(Rright > Rleft)
             {
@@ -129,13 +108,33 @@ class Drivetrain{
             }
             double x1 = cos(theta) * m;
             double y1 = sin(theta) * m;
-            theta += Rright / changeRight;
+            theta += Rright / deltaRight;
             double x2 = cos(theta) * m;
             double y2 = sin(theta) * m;
             x += x2 - x1;
             y += y2 - y1;
             return;
         }
+    }
+
+    void move(double velocity){
+	left.move(velocity;
+	right.move(velocity);
+    }
+
+    void turn(double velocity){
+	left.move(velocity);
+	right.move(-velocity);
+    }
+
+    void update(int leftStick, int rightStick){
+	if(drivetrain == Drivetrain.tank){
+	left.move(leftStick);
+	right.move(rightStick);
+	}else if(drivetrain == Drivetrain.split_arcade){
+	left.move(leftStick + rightStick);
+	right.move(leftStick - rightStick);
+	}
     }
 
 };
