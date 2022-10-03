@@ -4,7 +4,7 @@
 #include <string.h>
 #include <string>
 
-Drivetrain drivetrain;
+Drivetrain drivetrain = {Drive.split_arcade};
 Roller roller;
 
 /**
