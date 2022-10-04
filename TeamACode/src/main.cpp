@@ -95,18 +95,19 @@ void opcontrol() {
 	Controller master (CONTROLLER_MASTER);
 	while (true) {
 		drivetrain.update(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
-		{
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
 			roller.spin(127);
 		}
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
-		{
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
 			roller.spin(-127);
 		}
 		else {
 			roller.stop();
 		}
+		if(master.get_digital(E_CONTROLLER_DIGITAL_L1)){
+			flywheel.spin(90);
+		}
 		drivetrain.odomTick();
-		lcd::set_text(1, ("Left Encoder "+std::to_string(drivetrain.leftEncoder)+" Right Encoder"+std::to_string(drivetrain.rightEncoder)+"\n x " + std::to_string(drivetrain.x) + "y" + std::to_string(drivetrain.y)+" theta "+ std::to_string(drivetrain.theta)));
+		lcd::set_text(1, ("Left Encoder "+ to_string(drivetrain.leftEncoder) + " Right Encoder" + to_string(drivetrain.rightEncoder) + "\n x " + to_string(drivetrain.x) + "y" + to_string(drivetrain.y)+" theta "+ to_string(drivetrain.theta)));
 	}
 }
