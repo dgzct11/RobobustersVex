@@ -4,8 +4,11 @@
 #include "Flywheel.h"
 #include <string>
 
+using namespace std;
+
 Drivetrain drivetrain(split_arcade); 
 Roller roller;
+Flywheel flywheel;
 
 /**
  * A callback function for LLEMU's center button.
@@ -104,6 +107,6 @@ void opcontrol() {
 			roller.stop();
 		}
 		drivetrain.odomTick();
-		//lcd::set_text(1, ("Left Encoder "+std::to_string(drivetrain.leftEncoder)+" Right Encoder"+std::to_string(drivetrain.rightEncoder)+"\n x " + std::to_string(drivetrain.x) + "y" + std::to_string(drivetrain.y)+" theta "+ std::to_string(drivetrain.theta)));
+		lcd::set_text(1, ("Left Encoder "+std::to_string(drivetrain.leftEncoder)+" Right Encoder"+std::to_string(drivetrain.rightEncoder)+"\n x " + std::to_string(drivetrain.x) + "y" + std::to_string(drivetrain.y)+" theta "+ std::to_string(drivetrain.theta)));
 	}
 }
