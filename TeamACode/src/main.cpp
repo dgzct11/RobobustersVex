@@ -1,6 +1,7 @@
 #include "main.h"
 #include "Drivetrain.h"
 #include "Roller.h"
+#include "Flywheel.h"
 #include <string>
 
 Drivetrain drivetrain(split_arcade); 
