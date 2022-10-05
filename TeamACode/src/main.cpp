@@ -108,6 +108,6 @@ void opcontrol() {
 			flywheel.spin(90);
 		}
 		drivetrain.odomTick();
-		lcd::set_text(1, ("Left Encoder "+ to_string(drivetrain.leftEncoder) + " Right Encoder" + to_string(drivetrain.rightEncoder) + "\n x " + to_string(drivetrain.x) + "y" + to_string(drivetrain.y)+" theta "+ to_string(drivetrain.theta)));
+		lcd::set_text(1, ("Left Encoder "+ to_string(drivetrain.leftEncoder) + " Right Encoder" + to_string(drivetrain.rightEncoder) + "\n x " + to_string(drivetrain.pos.x) + "y" + to_string(drivetrain.pos.y)+" theta "+ to_string(drivetrain.theta)));
 	}
 }
