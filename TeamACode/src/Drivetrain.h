@@ -13,8 +13,7 @@ class Drivetrain{
     Motor_Group left = Motor_Group({leftFront, leftBack});
     Motor_Group right = Motor_Group({rightFront, rightBack});
     Drive drivetrain;
-    double x;
-    double y;
+    Vector2 pos = {0.0,0.0};
     double theta;
 
     double leftEncoder = (leftFront.get_position() + leftBack.get_position()) / 2;
@@ -42,8 +41,8 @@ class Drivetrain{
         rightEncoder = newRight;
         if(deltaLeft == deltaRight)
         {
-            y += sin(theta) * deltaLeft;
-            x += cos(theta) * deltaRight;
+            pos.y += sin(theta) * deltaLeft;
+            pos.x += cos(theta) * deltaRight;
             return;
         }
         else if((deltaLeft > 0 && deltaRight > 0) || (deltaRight < 0 && deltaLeft < 0))
@@ -65,8 +64,8 @@ class Drivetrain{
                 theta -= deltaLeft / R;
                 double x2 = cos(theta) * m;
                 double y2 = sin(theta) * m;
-                x += x2 - x1;
-                y += y2 - y1;
+                pos.x += x2 - x1;
+                pos.y += y2 - y1;
             return;
         }
         else if(deltaLeft == 0 || deltaRight == 0)
@@ -86,8 +85,8 @@ class Drivetrain{
             theta += dtheta;
             double x2 = cos(theta) * ROBOT_LENGTH;
             double y2 = sin(theta) * ROBOT_LENGTH;
-            x += x2 - x1;
-            y += y2 - y1;
+            pos.x += x2 - x1;
+            pos.y += y2 - y1;
             return;
         }
         else {
@@ -107,8 +106,8 @@ class Drivetrain{
             theta += Rright / deltaRight;
             double x2 = cos(theta) * m;
             double y2 = sin(theta) * m;
-            x += x2 - x1;
-            y += y2 - y1;
+            pos.x += x2 - x1;
+            pos.y += y2 - y1;
             return;
         }
     }
@@ -127,10 +126,9 @@ class Drivetrain{
 	if(drivetrain == tank){
 	left.move(leftStick);
 	right.move(rightStick);
-	}else if(drivetrain == split_arcade){
+	}else {
 	left.move(leftStick + rightStick);
 	right.move(leftStick - rightStick);
 	}
     }
-
 };
