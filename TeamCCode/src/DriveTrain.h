@@ -1,9 +1,5 @@
 #include "main.h"
-#include "pros/motors.hpp"
-extern int LEFT_BACK_PORT;
-extern int LEFT_FRONT_PORT;
-extern int RIGHT_BACK_PORT;
-extern int RIGHT_FRONT_PORT;
+#include "Constants.cpp"
 using namespace pros;
 class DriveTrain{
     public:
@@ -37,8 +33,8 @@ class DriveTrain{
         rightMotor.move(leftY - rightX);
     }
     
-    bool overThreshhold(int value)
+    bool overThreshhold(double value)
     {
-        return (abs(value)>=1);
+        return (fabs(value)>=1);
     }
 };  
