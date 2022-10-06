@@ -38,19 +38,16 @@ class Drivetrain{
         double deltaLeft = newLeft - leftEncoder; double deltaRight= newRight - rightEncoder;
         leftEncoder = newLeft;
         rightEncoder = newRight;
-        if(deltaLeft == deltaRight)
-        {
+        if(deltaLeft == deltaRight){
             pos.y += sin(theta) * deltaLeft;
             pos.x += cos(theta) * deltaRight;
             return;
         }
-        else if((deltaLeft > 0 && deltaRight > 0) || (deltaRight < 0 && deltaLeft < 0))
-        {
+        else if((deltaLeft > 0 && deltaRight > 0) || (deltaRight < 0 && deltaLeft < 0)){
             double m;
             double R;
             //turn Right
-            if(fabs(deltaLeft) < fabs(deltaRight))
-            {
+            if(fabs(deltaLeft) < fabs(deltaRight)){
                 double temp = deltaLeft;
                 deltaLeft = deltaRight;
                 deltaRight = temp;
@@ -67,16 +64,13 @@ class Drivetrain{
                 pos.y += y2 - y1;
             return;
         }
-        else if(deltaLeft == 0 || deltaRight == 0)
-        {
+        else if(deltaLeft == 0 || deltaRight == 0){
             double dtheta;
-            if(deltaLeft > 0)
-            {
+            if(deltaLeft > 0){
                 dtheta = deltaLeft / ROBOT_LENGTH;
 
             }
-            else
-            {
+            else{
                 dtheta = deltaRight / ROBOT_LENGTH;
             }
             double x1 = cos(theta) * ROBOT_LENGTH;
@@ -92,12 +86,10 @@ class Drivetrain{
             double m;
             double Rright = ROBOT_LENGTH / (1 + fabs(deltaRight / deltaLeft));
             double Rleft = ROBOT_LENGTH - Rright;
-            if(Rright > Rleft)
-            {
+            if(Rright > Rleft){
                 double m = Rright - (ROBOT_LENGTH / 2);
             }
-            else
-            {
+            else{
                 double m = Rleft - (ROBOT_LENGTH / 2);
             }
             double x1 = cos(theta) * m;
