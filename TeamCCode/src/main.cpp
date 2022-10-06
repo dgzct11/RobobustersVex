@@ -1,12 +1,9 @@
 #include "main.h"
 #include "DriveTrain.h"
 #include "Roller.h"
-#include "Whip.h"
-#include "pros/misc.h"
 
 DriveTrain driveTrain;
 Roller roller;
-Whip whip;
 
 //LEFT_BACK_PORT
 /**
@@ -107,15 +104,6 @@ void opcontrol() {
 		{
 			roller.stop();
 		}
-		if(master.get_digital(DIGITAL_L1)){
-			whip.whip();
-		}
-		else {
-			whip.noWhip();
-		}
-		
-
-		
 		pros::delay(20);
 	}
 }
