@@ -2,6 +2,7 @@
 #include "Drivetrain.h"
 #include "Roller.h"
 #include "Flywheel.h"
+#include "Endgame.h"
 #include <string>
 
 using namespace std;
@@ -9,6 +10,7 @@ using namespace std;
 Drivetrain drivetrain(split_arcade); 
 Roller roller;
 Flywheel flywheel;
+Endgame endgame;
 
 /**
  * A callback function for LLEMU's center button.
@@ -106,6 +108,9 @@ void opcontrol() {
 		}
 		if(master.get_digital(E_CONTROLLER_DIGITAL_L1)){
 			flywheel.spin(90);
+		}
+		if(master.get_digital(E_CONTROLLER_DIGITAL_LEFT) && master.get_digital(E_CONTROLLER_DIGITAL_LEFT) && master.get_digital(E_CONTROLLER_DIGITAL_A)){
+			endgame.Shoot();
 		}
 		drivetrain.odomTick();
 		lcd::set_text(1, ("Left Encoder "+ to_string(drivetrain.leftEncoder) + " Right Encoder" + to_string(drivetrain.rightEncoder) + "\n x " + to_string(drivetrain.pos.x) + "y" + to_string(drivetrain.pos.y)+" theta "+ to_string(drivetrain.theta)));

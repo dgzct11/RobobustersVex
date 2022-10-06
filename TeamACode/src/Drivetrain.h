@@ -32,8 +32,7 @@ class Drivetrain{
         return (fabs(value)>=1);
     }
 
-    void odomTick()
-    {
+    void odomTick(){
 	double newLeft = (leftFront.get_position() + leftBack.get_position()) / 2;
         double newRight = (rightFront.get_position() + rightBack.get_position()) / 2;
         double deltaLeft = newLeft - leftEncoder; double deltaRight= newRight - rightEncoder;
