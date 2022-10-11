@@ -14,8 +14,8 @@ class Robot{
     }
 
     double DistanceTo(Vector2 inpos){
-      double xDistance = fabs(pos.x - inpos.x);
-      double yDistance = fabs(pos.y - inpos.y);
+      double xDistance = pos.x - inpos.x;
+      double yDistance = pos.y - inpos.y;
 
       return sqrt(pow(xDistance,2) + pow(yDistance, 2));
     }
