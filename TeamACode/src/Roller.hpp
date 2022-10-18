@@ -7,9 +7,6 @@ class Roller{
     public:
     Motor roller = Motor(ROLLER_MOTOR_PORT);
    
-    Roller(){
-    }
-
     void spin(int voltage)
     {
         roller.move(voltage);

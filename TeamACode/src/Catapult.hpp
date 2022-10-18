@@ -1,18 +1,21 @@
 #include "main.h"
 
+#define BUMPER_PORT 1
+
 using namespace pros;
 
 class Catapult{
-	private:
-	const int ticksTillShot = 100;
-
 	public:
 
+	ADIDigitalIn bumper (BUMPER_PORT);
 	Motor_Group catapult;
 
 	Catapult(Motor_Group Catapult) : catapult(Catapult){}
 
 	void Cycle(){
-		Motor_Group.move_relative(ticksTillShot);
+					catapult.move(127);
+
+					while(!bumper.get_value()){}
+					catapult.move(0);
 	}
 };

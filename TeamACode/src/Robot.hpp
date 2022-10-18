@@ -1,6 +1,8 @@
-#include "main.h"
-#include "Drivetrain.h"
-#include "Roller.h"
+#include "Utils.cpp"
+#include "Drivetrain.hpp"
+#include "Roller.hpp"
+#include "Endgame.hpp"
+#include "Flywheel.hpp"
 
 class Robot{
   public:
@@ -9,7 +11,11 @@ class Robot{
     Roller roller;
     Endgame endgame;
 
-    Robot(Drivetrain drivetrain, Roller roller, Endgame endgame) : drivetrain(drivetrain), roller(roller), endgame(endgame){
+    Robot(Drivetrain drivetrain, Roller roller, Endgame endgame) {
+						this->drivetrain = drivetrain;
+						this->roller = roller;
+						this->endgame = endgame;
+
       pos = drivetrain.pos;
     }
 

@@ -1,8 +1,5 @@
 #include "main.h"
-#include "Drivetrain.h"
-#include "Roller.h"
-#include "Flywheel.h"
-#include "Endgame.h"
+#include "Robot.hpp"
 #include <string>
 
 using namespace std;
