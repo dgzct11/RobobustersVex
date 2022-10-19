@@ -1,6 +1,7 @@
 #include "main.h"
 #include "DriveTrain.h"
 #include "Roller.h"
+#include <String>
 
 DriveTrain driveTrain;
 Roller roller;
@@ -90,6 +91,7 @@ void autonomous() {
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	
+	//pros::Task odom = (driveTrain.odomTick);
 
 	while (true) {
 		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
@@ -104,6 +106,13 @@ void opcontrol() {
 		{
 			roller.stop();
 		}
+
+		driveTrain.odomTick();
+
 		pros::delay(20);
+
+		String positionPrint = "Pos is: " + to_String(driveTrain.pos.x);
+
+		pros::lcd::set_text(2,positionPrint);
 	}
 }

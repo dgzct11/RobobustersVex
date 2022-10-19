@@ -2,20 +2,20 @@
 
 #include "Utils.hpp"
 #include "Drivetrain.hpp"
-#include "Roller.hpp"
-#include "Endgame.hpp"
+//#include "Roller.hpp"
+//#include "Endgame.hpp"
 
 class Robot{
 	public:
 		Vector2 pos;
 		Drivetrain drivetrain;
-		Roller roller;
-		Endgame endgame;
+		//Roller roller;
+		//Endgame endgame;
 
-		Robot(Drivetrain drivetrain, Roller roller, Endgame endgame) {
+		Robot(Drivetrain drivetrain/*, Roller roller, Endgame endgame*/) {
 			this->drivetrain = drivetrain;
-			this->roller = roller;
-			this->endgame = endgame;
+			//this->roller = roller;
+			//this->endgame = endgame;
 
 			pos = drivetrain.pos;
 		}
