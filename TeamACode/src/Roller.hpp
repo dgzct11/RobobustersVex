@@ -1,6 +1,7 @@
-#include "main.h"
+#pragma once
 
-const int ROLLER_MOTOR_PORT = 5;
+#include "main.h"
+#include "Constants.hpp"
 
 using namespace pros;
 class Roller{

@@ -1,4 +1,6 @@
-#include "Utils.cpp"
+#pragma once
+
+#include "Utils.hpp"
 #include "Drivetrain.hpp"
 #include "Roller.hpp"
 #include "Endgame.hpp"

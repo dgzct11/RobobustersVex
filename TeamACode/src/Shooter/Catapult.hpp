@@ -1,3 +1,5 @@
+#pragma once
+
 #include "main.h"
 
 #define BUMPER_PORT 1
@@ -10,7 +12,9 @@ class Catapult{
 	ADIDigitalIn bumper (BUMPER_PORT);
 	Motor_Group catapult;
 
-	Catapult(Motor_Group Catapult) : catapult(Catapult){}
+	Catapult(Motor_Group Catapult) {
+		catapult = Catapult;
+	}
 
 	void Cycle(){
 					catapult.move(127);

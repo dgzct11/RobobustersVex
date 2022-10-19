@@ -1,8 +1,12 @@
+#pragma once
+
 #include "main.h"
+#include "Constants.hpp"
+#include "Utils.hpp"
 
 using namespace pros;
 class Drivetrain{
-				public:
+	public:
 								Motor leftBack = Motor(LEFT_BACK_PORT);
 								Motor leftFront = Motor(LEFT_FRONT_PORT);
 								Motor rightBack = Motor(RIGHT_BACK_PORT);
@@ -15,7 +19,8 @@ class Drivetrain{
 								double leftEncoder = (leftFront.get_position() + leftBack.get_position()) / 2;
 								double rightEncoder = (rightFront.get_position() + rightBack.get_position()) / 2;
 
-								Drivetrain(Drive driveType) : driveType(driveType){
+								Drivetrain(Drive driveType = tank){
+									this->driveType = driveType;
 												left.set_reversed(true);
 												left.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 												right.set_brake_modes(E_MOTOR_BRAKE_HOLD);

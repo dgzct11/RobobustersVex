@@ -6,7 +6,6 @@ using namespace std;
 
 Drivetrain drivetrain(split_arcade); 
 Roller roller;
-Flywheel flywheel;
 Endgame endgame;
 
 /**
@@ -102,9 +101,6 @@ void opcontrol() {
 		}
 		else {
 			roller.stop();
-		}
-		if(master.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			flywheel.spin(90);
 		}
 		if(master.get_digital(E_CONTROLLER_DIGITAL_LEFT) && master.get_digital(E_CONTROLLER_DIGITAL_LEFT) && master.get_digital(E_CONTROLLER_DIGITAL_A)){
 			endgame.Shoot();
