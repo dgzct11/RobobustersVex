@@ -9,17 +9,17 @@ using namespace pros;
 class Catapult{
 	public:
 
-	ADIDigitalIn bumper (BUMPER_PORT);
-	Motor_Group catapult;
+		ADIDigitalIn bumper (BUMPER_PORT);
+		Motor_Group catapult;
 
-	Catapult(Motor_Group Catapult) {
-		catapult = Catapult;
-	}
+		Catapult(Motor_Group Catapult) {
+			catapult = Catapult;
+		}
 
-	void Cycle(){
-					catapult.move(127);
+		void Cycle(){
+			catapult.move(127);
 
-					while(!bumper.get_value()){}
-					catapult.move(0);
-	}
+			while(!bumper.get_value()){}
+			catapult.move(0);
+		}
 };
