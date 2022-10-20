@@ -25,7 +25,6 @@ class Drivetrain{
 
 		bool overThreshhold(double value)
 		{
-
 			return (fabs(value)>=1);
 		}
 
