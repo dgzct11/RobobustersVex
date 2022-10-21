@@ -1,51 +1,35 @@
-#include "main.h"
+#include "Utils.hpp"
 #include "Constants.cpp"
 #include "Util.hpp"
 using namespace pros;
-class DriveTrain{
-    public:
-    Motor leftBack = Motor( LEFT_BACK_PORT);
-    Motor leftFront = Motor(LEFT_FRONT_PORT);
-    Motor rightBack = Motor(RIGHT_FRONT_PORT);
-    Motor rightFront = Motor(RIGHT_BACK_PORT);
-    Motor_Group leftMotor = Motor_Group({leftFront, leftBack});
-    Motor_Group rightMotor = Motor_Group({rightFront, rightBack});
-
-    Vector2 pos;
-
-    double theta;
+class Drivetrain{
+	public:
+		Motor leftBack = Motor(LEFT_BACK_PORT);
+		Motor leftFront = Motor(LEFT_FRONT_PORT);
+		Motor rightBack = Motor(RIGHT_BACK_PORT);
+		Motor rightFront = Motor(RIGHT_FRONT_PORT);
+		Motor_Group left = Motor_Group({leftFront, leftBack});
+		Motor_Group right = Motor_Group({rightFront, rightBack});
+		Drive driveType;
+		Vector2 pos = Vector2(0.0, 0.0);
+		double theta;
 		double leftEncoder = (leftFront.get_position() + leftBack.get_position()) / 2;
 		double rightEncoder = (rightFront.get_position() + rightBack.get_position()) / 2;
 
-    DriveTrain(){
-        leftMotor.set_reversed(true);
-        leftMotor.set_brake_modes(E_MOTOR_BRAKE_HOLD);
-        rightMotor.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+		Drivetrain(Drive driveType = tank){
+			this->driveType = driveType;
+			left.set_reversed(true);
+			left.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+			right.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 
-    }
-    void tankDrive(int leftY, int rightY){
-        leftMotor.move( leftY);
-        rightMotor.move( rightY);
-        if(!overThreshhold(leftY))
-        {
-            leftMotor.move_velocity(0);
-        }
-        if(!overThreshhold(rightY))
-        {
-           rightMotor.move_velocity(0);
-        }
-    }
-    void arcadeDrive(int leftY, int rightX){
-        leftMotor.move(leftY + rightX);
-        rightMotor.move(leftY - rightX);
-    }
-    
-    bool overThreshhold(double value)
-    {
-        return (fabs(value)>=1);
-    }
+		}
 
-    void odomTick(){
+		bool overThreshhold(double value)
+		{
+			return (fabs(value)>=1);
+		}
+
+		void odomTick(){
 			double newLeft = (leftFront.get_position() + leftBack.get_position()) / 2;
 			double newRight = (rightFront.get_position() + rightBack.get_position()) / 2;
 			double deltaLeft = newLeft - leftEncoder; double deltaRight= newRight - rightEncoder;
@@ -115,4 +99,24 @@ class DriveTrain{
 				return;
 			}
 		}
-};  
+
+		void move(double velocity){
+			left.move(velocity);
+			right.move(velocity);
+		}
+
+		void turn(double velocity){
+			left.move(velocity);
+			right.move(-velocity);
+		}
+
+		void update(int leftStick, int rightStick){
+			if(driveType == tank){
+				left.move(leftStick);
+				right.move(rightStick);
+			}else {
+				left.move(leftStick + rightStick);
+				right.move(leftStick - rightStick);
+			}
+		}
+};

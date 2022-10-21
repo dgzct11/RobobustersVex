@@ -1,12 +1,6 @@
 #include "main.h"
 #include "DriveTrain.h"
-#include "Roller.h"
-#include <String>
 
-DriveTrain driveTrain;
-Roller roller;
-
-//LEFT_BACK_PORT
 /**
  * A callback function for LLEMU's center button.
  *
@@ -34,8 +28,6 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
-
-	
 }
 
 /**
@@ -67,13 +59,7 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
-	driveTrain.tankDrive(-75, -75);
-	delay(300);
-	roller.spin();
-	driveTrain.tankDrive(0, 0);
-	roller.stop();
-}
+void autonomous() {}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -90,25 +76,18 @@ void autonomous() {
  */
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	
-	//pros::Task odom = (driveTrain.odomTick);
+	pros::Motor left_mtr(1);
+	pros::Motor right_mtr(2);
 
 	while (true) {
-		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
-		if(master.get_digital(DIGITAL_R1)){
-			roller.spin();
-		}
-		else if(master.get_digital(DIGITAL_R2))
-		{
-			roller.spinOpp();
-		}
-		else
-		{
-			roller.stop();
-		}
+		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
+		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
+		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
+		int left = master.get_analog(ANALOG_LEFT_Y);
+		int right = master.get_analog(ANALOG_RIGHT_Y);
 
-		driveTrain.odomTick();
-
+		left_mtr = left;
+		right_mtr = right;
 		pros::delay(20);
 
 		String positionPrint = "Pos is: " + to_String(driveTrain.pos.x);
