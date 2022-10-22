@@ -7,3 +7,4 @@
 #define ROBOT_LENGTH 18.0
 #define TICKS_PER_INCH 1555
 #define ROLLER_MOTOR_PORT 5
+#define pi 3.14
