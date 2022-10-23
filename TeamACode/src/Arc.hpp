@@ -48,8 +48,8 @@ class Arc{
 
     float dist(Vector2 p1, Vector2 p2)
     {
-        float x = abs(p1.x - p2.x);
-        float y = abs(p1.y - p2.y);
+        float x = fabs(p1.x - p2.x);
+        float y = fabs(p1.y - p2.y);
         //cout << "x " << x << endl;
         //cout << "y " << y << endl;
         return sqrtf(powf(x, 2) + powf(y, 2));
