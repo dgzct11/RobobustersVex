@@ -48,24 +48,12 @@ class Arc{
 
     float dist(Vector2 p1, Vector2 p2)
     {
-        float x = absDiff(p1.x, p2.x);
-        float y = absDiff(p1.y, p2.y);
+        float x = abs(p1.x - p2.x);
+        float y = abs(p1.y - p2.y);
         //cout << "x " << x << endl;
         //cout << "y " << y << endl;
         return sqrtf(powf(x, 2) + powf(y, 2));
     };
-
-    float absDiff(float x, float y)
-    {
-        if(abs(x) > abs(y))
-        {
-            return x - y;
-        }
-        else
-        {
-            return y - x;
-        }
-    }
 
     Vector2 distanceToCoordinate(float distance)
     {
