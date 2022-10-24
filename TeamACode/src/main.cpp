@@ -1,13 +1,15 @@
 #include "main.h"
-//#include "Robot.hpp"
+#include "Robot.hpp"
 #include "Drivetrain.hpp"
 #include <string>
 
 using namespace std;
 
-Drivetrain drivetrain(split_arcade); 
-//Roller roller;
-//Endgame endgame;
+Drive* DriveType = new Drive(split_arcade);
+
+Drivetrain drivetrain(DriveType); 
+Roller roller;
+Endgame endgame;
 
 /**
  * A callback function for LLEMU's center button.
