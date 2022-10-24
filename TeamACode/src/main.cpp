@@ -11,6 +11,8 @@ Drivetrain drivetrain(DriveType);
 Roller roller;
 Endgame endgame;
 
+Robot robot = Robot(&drivetrain, &roller, &endgame);
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -70,12 +72,12 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	/*roller.spin(127);
+	roller.spin(127);
 	delay(300);
 	drivetrain.move(30);
 	delay(250);
 	drivetrain.move(0);
-	roller.stop();*/
+	roller.stop();
 }
 
 /**
@@ -95,7 +97,7 @@ void opcontrol() {
 	Controller master (CONTROLLER_MASTER);
 	while (true) {
 		drivetrain.update(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
-		/*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
 			roller.spin(127);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
@@ -106,12 +108,11 @@ void opcontrol() {
 		}
 		if(master.get_digital(E_CONTROLLER_DIGITAL_LEFT) && master.get_digital(E_CONTROLLER_DIGITAL_LEFT) && master.get_digital(E_CONTROLLER_DIGITAL_A)){
 			endgame.Shoot();
-		}*/
+		}
 		drivetrain.odomTick();
 		
 		string position = to_string(drivetrain.leftEncoder) + " " + to_string(drivetrain.rightEncoder);
 
 		pros::lcd::set_text(1, position);
-		//pros::lcd::print(pros::TEXT_SMALL, 3, "Seconds Passed: %3d", drivetrain.pos.x);
 	}
 }
