@@ -1,6 +1,7 @@
+#pragma once
+
 #include "Utils.hpp"
-#include "Constants.cpp"
-#include "Util.hpp"
+#include "Constants.hpp"
 using namespace pros;
 class Drivetrain{
 	public:
