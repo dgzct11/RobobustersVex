@@ -1,5 +1,8 @@
 #include "main.h"
 #include "DriveTrain.h"
+#include <string>
+
+Drivetrain drivetrain;
 
 /**
  * A callback function for LLEMU's center button.
@@ -90,8 +93,7 @@ void opcontrol() {
 		right_mtr = right;
 		pros::delay(20);
 
-		String positionPrint = "Pos is: " + to_String(driveTrain.pos.x);
-
-		pros::lcd::set_text(2,positionPrint);
+		//string positionPrint = "Pos is: " + std::to_string(drivetrain.pos.x);
+		//pros::lcd::set_text(2,positionPrint);
 	}
 }
