@@ -19,8 +19,8 @@ class Drivetrain{
 		double leftEncoder = (leftFront.get_position() + leftBack.get_position()) / 2;
 		double rightEncoder = (rightFront.get_position() + rightBack.get_position()) / 2;
 
-		Drivetrain(Drive driveType = tank){
-			this->driveType = driveType;
+		Drivetrain(Drive* driveType = new Drive(tank)){
+			this->driveType = *driveType;
 			left.set_reversed(true);
 			left.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 			right.set_brake_modes(E_MOTOR_BRAKE_HOLD);
