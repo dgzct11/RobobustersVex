@@ -15,10 +15,10 @@ class Line{
       Vector2 disToCord = endPos.operator-(startPos);
       disToCordx = pow(disToCord.x, 2);
       disToCordy = pow(disToCord.y, 2);
-      disBtwnCords = sqrt(disToCord.x + disToCord.y);
+      disBtwnCords = sqrt(disToCordx + disToCordy);
       ratio = dis/disBtwnCords;
-      disToCord.x *= ratio;
-      disToCord.y *= ratio;
+      disToCord.x = disToCord.x * ratio + startPos.x;
+      disToCord.y = disToCord.y * ratio + startPos.y;
       return disToCord;
     }
 };
