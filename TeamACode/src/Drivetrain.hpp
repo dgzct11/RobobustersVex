@@ -3,8 +3,10 @@
 #include "main.h"
 #include "Constants.hpp"
 #include "Utils.hpp"
+#include <string>
 
 using namespace pros;
+using namespace std;
 class Drivetrain{
 	public:
 		Motor leftBack = Motor(LEFT_BACK_PORT);
@@ -18,6 +20,9 @@ class Drivetrain{
 		double theta;
 		double leftEncoder = (leftFront.get_position() + leftBack.get_position()) / 2;
 		double rightEncoder = (rightFront.get_position() + rightBack.get_position()) / 2;
+		int ifID = -1; 
+		double publicDeltaLeft = -1;
+		double publicDeltaRight = -1;
 
 		Drivetrain(Drive* driveType = new Drive(tank)){
 			this->driveType = *driveType;
@@ -34,15 +39,23 @@ class Drivetrain{
 		}
 
 		void odomTick(){
-			double newLeft = (leftFront.get_position() + leftBack.get_position()) / 2;
-			double newRight = (rightFront.get_position() + rightBack.get_position()) / 2;
-			double deltaLeft = newLeft - leftEncoder; double deltaRight= newRight - rightEncoder;
+			double newLeft = (leftBack.get_position());
+			double newRight = (rightBack.get_position());
+			double deltaLeft = (newLeft - leftEncoder) * 0.0195; 
+			double deltaRight= (newRight - rightEncoder) * 0.0195;
+			publicDeltaLeft = deltaLeft;
+			publicDeltaRight = deltaRight;
+			string position = "deltas: " + to_string(deltaLeft) + " " + to_string(deltaRight) + " " + to_string(pos.x) + " " + to_string(pos.y) + " " + to_string(theta) + " " + to_string(ifID); 
+			std::cout << position << std::endl;
+
 			leftEncoder = newLeft;
 			rightEncoder = newRight;
 			if(deltaLeft == deltaRight){
 				pos.y += sin(theta) * deltaLeft;
 				pos.x += cos(theta) * deltaRight;
+				ifID = 1;
 				return;
+
 			}
 			else if((deltaLeft > 0 && deltaRight > 0) || (deltaRight < 0 && deltaLeft < 0)){
 				double m;
@@ -63,6 +76,7 @@ class Drivetrain{
 				double y2 = sin(theta) * m;
 				pos.x += x2 - x1;
 				pos.y += y2 - y1;
+				ifID = 2;
 				return;
 			}
 			else if(deltaLeft == 0 || deltaRight == 0){
@@ -81,6 +95,7 @@ class Drivetrain{
 				double y2 = sin(theta) * ROBOT_LENGTH;
 				pos.x += x2 - x1;
 				pos.y += y2 - y1;
+				ifID = 3; 
 				return;
 			}
 			else {
@@ -100,8 +115,10 @@ class Drivetrain{
 				double y2 = sin(theta) * m;
 				pos.x += x2 - x1;
 				pos.y += y2 - y1;
+				ifID = 4;
 				return;
 			}
+			pros::delay(10);
 		}
 
 		void move(double velocity){

@@ -7,4 +7,5 @@
 #define ROBOT_LENGTH 18.0
 #define TICKS_PER_INCH 1555
 #define ROLLER_MOTOR_PORT 5
-#define pi 3.14
+#define pi 3.14159265359
+#define INCHES_TO_TICK 0.0195476876223
