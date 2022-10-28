@@ -17,19 +17,19 @@ struct Vector2{
 			this->y = y;
 		}
 
-		Vector2 operator+(Vector2 otherVector){
-			return {x + otherVector.x, y + otherVector.y};
+		Vector2 operator+(Vector2 vec){
+			return {x + vec.x, y + vec.y};
 		}
 
-		Vector2 operator-(Vector2 otherVector){
-			return {x - otherVector.x, y - otherVector.y};
+		Vector2 operator-(Vector2 vec){
+			return {x - vec.x, y - vec.y};
 		}
 
-		Vector2 operator*(Vector2 otherVector){
-			return {x * otherVector.x, y * otherVector.y};
+		Vector2 operator*(Vector2 vec){
+			return {x * vec.x, y * vec.y};
 		}
 
-		Vector2 operator/(Vector2 otherVector){
-			return {x / otherVector.x, y / otherVector.y};
+		Vector2 operator/(Vector2 vec){
+			return {x / vec.x, y / vec.y};
 		}
 };
