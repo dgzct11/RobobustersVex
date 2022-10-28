@@ -2,6 +2,7 @@
 #include "Robot.hpp"
 #include "Drivetrain.hpp"
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -111,8 +112,9 @@ void opcontrol() {
 		}
 		drivetrain.odomTick();
 		
-		string position = to_string(drivetrain.leftEncoder) + " " + to_string(drivetrain.rightEncoder);
+		/*string position = to_string(drivetrain.pos.x) + " " + to_string(drivetrain.pos.y ) + " " + to_string(drivetrain.theta) + " " + to_string(drivetrain.ifID) + " "  + to_string(drivetrain.publicDeltaLeft) + " " + to_string(drivetrain.publicDeltaRight);
 
-		pros::lcd::set_text(1, position);
+		std::cout << position << std::endl;*/
+		pros::delay(10);
 	}
 }
