@@ -131,6 +131,79 @@ class Drivetrain{
 			right.move(-velocity);
 		}
 
+		void PIDMove(double distance){
+			const double kP;
+			const double kI;
+			const double kD;
+
+			Vector2 StartingPos = {leftEncoder, rightEncoder};
+
+			double AverageValueEncoder;
+
+			double integral;
+			double derivative;
+
+			double error;
+			double prevError;
+			double speed;
+
+			while(fabs(error) > 0.1){
+				AverageValueEncoder = ((leftEncoder - StartingPos.x) + (rightEncoder = StartingPos.y))/2;
+
+				error = distance - AverageValueEncoder;
+				integral += error;
+
+				if(error = 0){
+					integral = 0;
+				}
+				if(fabs(error) > 40){
+					integral = 0;
+				}
+
+				derivative = error - prevError;
+
+				speed = (kP * error) + (kI * integral) + (kD * derivative);
+
+				left.move(speed);
+				right.move(speed);
+			}
+		}
+
+		void PIDTurn(double angle){
+			const double kP;
+			const double kI;
+			const double kD;
+
+			double startingHeading = theta;
+
+			double integral;
+			double derivative;
+
+			double error;
+			double prevError;
+			double speed;
+
+			while(fabs(error) > 0.1){
+				error = angle - startingHeading;
+				integral += error;
+
+				if(error == 0){
+					integral = 0;
+				}
+				if(fabs(error) > 40){
+					integral = 0;
+				}
+
+				derivative = error - prevError;
+
+				prevError = error;
+				speed = (kP * error) + (kI * integral) + (kD * derivative);
+
+				left.move(speed);
+				right.move(-speed);
+			}
+		}
+
 		void update(int leftStick, int rightStick){
 			if(driveType == tank){
 				left.move(leftStick);

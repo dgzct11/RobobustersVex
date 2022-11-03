@@ -4,6 +4,7 @@ using namespace std;
 #include "main.h"
 #include <iostream>
 #include "Utils.hpp"
+#include "Constants.hpp"
 #include <cmath>
  
 class Arc{
@@ -30,20 +31,20 @@ class Arc{
         rtheta1 = gATan(I1.y - P.y, I1.x - P.x);
         //cout << "t1 dy " <<  I1.y - P.y << endl;
         //cout << "t1 dx" << I1.x - P.x << endl;
-        //cout << "theta1 " << rtheta1 * 180 / 3.14 << endl;
+        //cout << "theta1 " << rtheta1 * 180 / pi << endl;
         rtheta2 = gATan(I2.y - P.y,  I2.x - P.x);
         //cout << "t2 dy " <<  I2.y - P.y << endl;
         //cout << "t2 dx" << I2.x - P.x << endl;
-        //cout << "theta2 " << rtheta2 * 180 / 3.14 << endl;
+        //cout << "theta2 " << rtheta2 * 180 / pi << endl;
         float thetaToCenter = (rtheta1 + rtheta2) / 2;
-        //cout << "PtoCenter angle " << thetaToCenter * 180 / 3.14 << endl;
+        //cout << "PtoCenter angle " << thetaToCenter * 180 / pi << endl;
         float PtoCenter = (2 * radius * d1) / d2;
         //cout << "PtoCenter " << PtoCenter << endl;
         center = {P.x + PtoCenter * cos(thetaToCenter), P.y + PtoCenter * sin(thetaToCenter)};
         rtheta1 = gATan((I1.y - center.y), (I1.x - center.x));
-        //cout << "theta1 " << rtheta1 * 180 / 3.14 << endl;
+        //cout << "theta1 " << rtheta1 * 180 / pi << endl;
         rtheta2 = gATan((I2.y - center.y), (I2.x - center.x));
-        //cout << "theta2 " << rtheta2 * 180 / 3.14 << endl;
+        //cout << "theta2 " << rtheta2 * 180 / pi << endl;
     };
 
     float dist(Vector2 p1, Vector2 p2)
@@ -70,7 +71,7 @@ class Arc{
         else {
             point = {center.x + cos(rtheta1 - ntheta) * radius, center.y + sin(rtheta1 - ntheta) * radius};
         }
-        //cout << "nTheta" << ntheta * 180 / 3.14 << endl;
+        //cout << "nTheta" << ntheta * 180 / pi << endl;
         return point;
     };
 
@@ -79,15 +80,15 @@ class Arc{
         float theta = atanf(y / x);
         if(theta < 0)
         {
-            theta += 2 * 3.14;
+            theta += 2 * pi;
         }
         if(y > 0 && x < 0)
         {
-            theta -= 3.14;
+            theta -= pi;
         }
         else if(y < 0 && x < 0)
         {
-            theta += 3.14;
+            theta += pi;
         }
         return theta;
     }
