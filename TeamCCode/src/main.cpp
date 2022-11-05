@@ -1,8 +1,12 @@
 #include "main.h"
 #include "DriveTrain.h"
 #include <string>
+#include "Roller.h"
+#include "Launcher.h"
 
-Drivetrain drivetrain;
+DriveTrain driveTrain;
+Roller roller;
+Launcher launcher;
 
 /**
  * A callback function for LLEMU's center button.
@@ -78,6 +82,7 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	/*
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	pros::Motor left_mtr(1);
 	pros::Motor right_mtr(2);
@@ -92,8 +97,40 @@ void opcontrol() {
 		left_mtr = left;
 		right_mtr = right;
 		pros::delay(20);
-
 		//string positionPrint = "Pos is: " + std::to_string(drivetrain.pos.x);
 		//pros::lcd::set_text(2,positionPrint);
+	}
+	*/
+	
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	
+
+	while (true) {
+		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+
+		if(master.get_digital(DIGITAL_R1)){
+			roller.spin();
+		}
+		else if(master.get_digital(DIGITAL_R2))
+		{
+			roller.spinOpp();
+		}
+		else
+		{
+			roller.stop();
+		}
+
+		if(master.get_digital(DIGITAL_X))
+		{
+			launcher.trigger();
+		}
+		else{
+			launcher.hold();
+		}
+		
+		
+
+		
+		pros::delay(20);
 	}
 }
