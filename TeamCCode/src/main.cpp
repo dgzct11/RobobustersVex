@@ -69,9 +69,7 @@ void competition_initialize() {}
 void autonomous() {
 	
 	driveTrain.tankDrive(-30,-30);
-	delay(300);
 	roller.spinAuto(127);
-	delay(500);
 	driveTrain.tankDrive(0, 0);
 	roller.stop();
 }
@@ -132,12 +130,15 @@ void opcontrol() {
 		{
 			launcher.trigger();
 		}
-		else if(master.get_digital(DIGITAL_Y))
-		{
-			launcher.back();
-		}
 		else{
 			launcher.hold();
+		}
+
+		if(master.get_digital(DIGITAL_B)){
+			launcher.release();
+		}
+		else{
+			launcher.holdRelease();
 		}
 		
 		

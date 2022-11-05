@@ -23,7 +23,8 @@ class Roller{
         rollerMotor.move_velocity(0);
     }
     void spinAuto(int amount){
-        rollerMotor.move_relative(amount, 100);
+        rollerMotor.move(amount);
     }
+    
 };
  
