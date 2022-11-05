@@ -14,14 +14,17 @@ class Launcher{
     }
     void trigger(){
         releaseMotor.move_relative(500,100);
-        delay(200);
-        launcherMotor.move_relative(500,100);
     }
     void back(){
         launcherMotor.move_relative(0,100);
     }
     void hold(){
-        releaseMotor.move_velocity(0);
         launcherMotor.move_velocity(0);
+    }
+    void release(){
+        releaseMotor.move_relative(700,100);
+    }
+    void holdRelease(){
+        releaseMotor.move_velocity(0);
     }
 };
