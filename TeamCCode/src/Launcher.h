@@ -13,7 +13,7 @@ class Launcher{
         launcherMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     }
     void trigger(){
-        releaseMotor.move_relative(500,100);
+        launcherMotor.move_relative(1000,100);
     }
     void back(){
         launcherMotor.move_relative(0,100);
@@ -22,7 +22,7 @@ class Launcher{
         launcherMotor.move_velocity(0);
     }
     void release(){
-        releaseMotor.move_relative(700,100);
+        releaseMotor.move_relative(1000,100);
     }
     void holdRelease(){
         releaseMotor.move_velocity(0);
