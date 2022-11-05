@@ -17,6 +17,9 @@ class Launcher{
         delay(200);
         launcherMotor.move_relative(500,100);
     }
+    void back(){
+        launcherMotor.move_relative(0,100);
+    }
     void hold(){
         releaseMotor.move_velocity(0);
         launcherMotor.move_velocity(0);

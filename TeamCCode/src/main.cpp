@@ -132,6 +132,10 @@ void opcontrol() {
 		{
 			launcher.trigger();
 		}
+		else if(master.get_digital(DIGITAL_Y))
+		{
+			launcher.back();
+		}
 		else{
 			launcher.hold();
 		}
