@@ -1,17 +1,20 @@
 #pragma once
 
 #include "main.h"
+#include "pros/motors.hpp"
+#include "Constants.hpp"
+#include "pros/rtos.h"
 
 using namespace pros;
-
-#define PNEUMATICS_ADI_PORT 'A'
-
 class Endgame{
 	public:
-	bool endgameState = false;
-	ADIDigitalOut pneumatics = ADIDigitalOut(PNEUMATICS_ADI_PORT);
+	Motor endgame = Motor(ENDGAME_PORT);
+	
 
 	void Shoot(){
-		pneumatics.set_value(!endgameState);
+		endgame.move(127);
+	}
+	void off(){
+		endgame.move(0);
 	}
 };

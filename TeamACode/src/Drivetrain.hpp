@@ -17,13 +17,14 @@ class Drivetrain{
 		Motor_Group right = Motor_Group({rightFront, rightBack});
 		Drive driveType;
 		Vector2 pos = Vector2(0.0, 0.0);
+		/*
 		double theta;
 		double leftEncoder = (leftFront.get_position() + leftBack.get_position()) / 2;
 		double rightEncoder = (rightFront.get_position() + rightBack.get_position()) / 2;
 		int ifID = -1; 
 		double publicDeltaLeft = -1;
 		double publicDeltaRight = -1;
-
+		*/
 		Drivetrain(Drive* driveType = new Drive(tank)){
 			this->driveType = *driveType;
 			left.set_reversed(true);
@@ -31,13 +32,13 @@ class Drivetrain{
 			right.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 
 		}
-
+		/*
 		bool overThreshhold(double value)
 		{
-
 			return (fabs(value)>=1);
 		}
-
+		*/
+		/*
 		void odomTick(){
 			double newLeft = (leftBack.get_position());
 			double newRight = (rightBack.get_position());
@@ -120,7 +121,7 @@ class Drivetrain{
 			}
 			pros::delay(10);
 		}
-
+		*/
 		void move(double velocity){
 			left.move(velocity);
 			right.move(velocity);
@@ -130,7 +131,7 @@ class Drivetrain{
 			left.move(velocity);
 			right.move(-velocity);
 		}
-
+		/*
 		void PIDMove(double distance){
 			const double kP;
 			const double kI;
@@ -203,7 +204,7 @@ class Drivetrain{
 				right.move(-speed);
 			}
 		}
-
+		*/
 		void update(int leftStick, int rightStick){
 			if(driveType == tank){
 				left.move(leftStick);

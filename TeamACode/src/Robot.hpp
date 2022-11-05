@@ -7,7 +7,7 @@
 
 class Robot{
 	public:
-		Vector2 pos;
+		//Vector2 pos;
 		Drivetrain* drivetrain;
 		Roller* roller;
 		Endgame* endgame;
@@ -17,15 +17,15 @@ class Robot{
 			this->roller = roller;
 			this->endgame = endgame;
 
-			pos = drivetrain->pos;
+			//pos = drivetrain->pos;
 		}
-
+		/*
 		double DistanceTo(Vector2 inpos){
 			double xDistance = pos.x - inpos.x;
 			double yDistance = pos.y - inpos.y;
 
 			return sqrt(pow(xDistance,2) + pow(yDistance, 2));
 		}
-
+		*/
 };
 

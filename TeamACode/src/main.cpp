@@ -6,13 +6,13 @@
 
 using namespace std;
 
-Drive* DriveType = new Drive(split_arcade);
+Drive* DriveType = new Drive(tank);
 
 Drivetrain drivetrain(DriveType); 
 Roller roller;
 Endgame endgame;
 
-Robot robot = Robot(&drivetrain, &roller, &endgame);
+//Robot robot = Robot(&drivetrain, &roller, &endgame);
 
 /**
  * A callback function for LLEMU's center button.
@@ -97,7 +97,7 @@ void autonomous() {
 void opcontrol() {
 	Controller master (CONTROLLER_MASTER);
 	while (true) {
-		drivetrain.update(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
+		drivetrain.update(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
 			roller.spin(127);
 		}
@@ -107,14 +107,17 @@ void opcontrol() {
 		else {
 			roller.stop();
 		}
-		if(master.get_digital(E_CONTROLLER_DIGITAL_LEFT) && master.get_digital(E_CONTROLLER_DIGITAL_LEFT) && master.get_digital(E_CONTROLLER_DIGITAL_A)){
+		if(master.get_digital(E_CONTROLLER_DIGITAL_X)){
 			endgame.Shoot();
 		}
-		drivetrain.odomTick();
+		else {
+			endgame.off();
+		}
+		//drivetrain.odomTick();
 		
 		/*string position = to_string(drivetrain.pos.x) + " " + to_string(drivetrain.pos.y ) + " " + to_string(drivetrain.theta) + " " + to_string(drivetrain.ifID) + " "  + to_string(drivetrain.publicDeltaLeft) + " " + to_string(drivetrain.publicDeltaRight);
 
 		std::cout << position << std::endl;*/
-		pros::delay(10);
+		//pros::delay(10);
 	}
 }
