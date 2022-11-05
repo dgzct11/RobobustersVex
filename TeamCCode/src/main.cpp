@@ -66,7 +66,15 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	
+	driveTrain.tankDrive(-30,-30);
+	delay(300);
+	roller.spinAuto(127);
+	delay(500);
+	driveTrain.tankDrive(0, 0);
+	roller.stop();
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
