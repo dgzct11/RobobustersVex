@@ -19,7 +19,7 @@ class Endgame{
 		release.move(0);
 		endgame.move(127);
 	}
-	void off(){
+	void Off(){
 		endgame.move(0);
 		release.move(0);
 	}

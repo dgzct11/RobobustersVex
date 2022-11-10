@@ -111,7 +111,7 @@ void opcontrol() {
 			endgame.Shoot();
 		}
 		else {
-			endgame.off();
+			endgame.Off();
 		}
 		//drivetrain.odomTick();
 		
