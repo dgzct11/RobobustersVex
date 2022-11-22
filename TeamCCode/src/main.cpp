@@ -3,10 +3,13 @@
 #include <string>
 #include "Roller.h"
 #include "Launcher.h"
+#include "Flywheel.h"
+#include "pros/misc.h"
 
 DriveTrain driveTrain;
 Roller roller;
 Launcher launcher;
+Flywheel flywheel;
 
 /**
  * A callback function for LLEMU's center button.
@@ -142,7 +145,13 @@ void opcontrol() {
 		}
 		
 		
-
+		if(master.get_digital(DIGITAL_L1))
+		{
+			flywheel.spin();
+		}
+		if(master.get_digital(DIGITAL_L2)){
+			flywheel.spinReverse();
+		}
 		
 		pros::delay(20);
 	}
