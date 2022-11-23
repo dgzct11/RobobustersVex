@@ -4,12 +4,16 @@
 #include "Roller.h"
 #include "Launcher.h"
 #include "Flywheel.h"
+#include "Odom.h"
 #include "pros/misc.h"
+#include "Endgame.h"
 
 DriveTrain driveTrain;
 Roller roller;
 Launcher launcher;
 Flywheel flywheel;
+Odom odom;
+Endgame endgame;
 
 /**
  * A callback function for LLEMU's center button.
@@ -115,6 +119,7 @@ void opcontrol() {
 	
 
 	while (true) {
+		std::cout <<"work? "<< odom.getValue() << std::endl;
 		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
 		if(master.get_digital(DIGITAL_R1)){
@@ -131,26 +136,17 @@ void opcontrol() {
 
 		if(master.get_digital(DIGITAL_X))
 		{
-			launcher.trigger();
+			endgame.launch();
+		}
+		else if(master.get_digital(DIGITAL_Y)){
+			endgame.reverse();
 		}
 		else{
-			launcher.hold();
+			endgame.stop();
 		}
 
-		if(master.get_digital(DIGITAL_B)){
-			launcher.release();
-		}
-		else{
-			launcher.holdRelease();
-		}
-		
-		
-		if(master.get_digital(DIGITAL_L1))
-		{
-			flywheel.spin();
-		}
-		if(master.get_digital(DIGITAL_L2)){
-			flywheel.spinReverse();
+		if(master.get_digital(DIGITAL_A)){
+			odom.reset();
 		}
 		
 		pros::delay(20);

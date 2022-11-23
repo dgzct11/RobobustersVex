@@ -15,14 +15,14 @@ class Flywheel{
     }
 
     void spin(){
-        flywheel.move(600);
+        flywheel.move(200);
     }
 
     void spinReverse(){
         flywheel.move(-600);
     }
-    
+
     void stop(){
         flywheel.move_velocity(0);
-    }
+    } 
 };

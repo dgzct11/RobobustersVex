@@ -48,10 +48,7 @@ class DriveTrain{
 using namespace pros;
 class Drivetrain{
 	public:
-		Motor leftBack = Motor(LEFT_BACK_PORT);
-		Motor leftFront = Motor(LEFT_FRONT_PORT);
-		Motor rightBack = Motor(RIGHT_BACK_PORT);
-		Motor rightFront = Motor(RIGHT_FRONT_PORT);
+		  (RIGHT_FRONT_PORT);
 		Motor_Group left = Motor_Group({leftFront, leftBack});
 		Motor_Group right = Motor_Group({rightFront, rightBack});
 		Drive driveType;
