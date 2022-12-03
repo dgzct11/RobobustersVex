@@ -76,7 +76,8 @@ void competition_initialize() {}
  */
 void autonomous() {
 	
-	driveTrain.tankDrive(-30,-30);
+	driveTrain.tankDrive(-200,-200);
+	pros::delay(20);  
 	roller.spinAuto(127);
 	driveTrain.tankDrive(0, 0);
 	roller.stop();
@@ -120,7 +121,8 @@ void opcontrol() {
 	
 
 	while (true) {
-		std::cout <<"work? "<< odom.getValue() << std::endl;
+		std::cout << roller.getPosition() << std::endl;
+
 		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
 		if(master.get_digital(DIGITAL_R1)){

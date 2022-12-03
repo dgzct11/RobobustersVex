@@ -25,6 +25,9 @@ class Roller{
     void spinAuto(int amount){
         rollerMotor.move(amount);
     }
+    int getPosition(){
+        return rollerMotor.get_position();
+    }
     
 };
  
