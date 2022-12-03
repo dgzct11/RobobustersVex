@@ -32,4 +32,8 @@ struct Vector2{
 		Vector2 operator/(Vector2 vec){
 			return {x / vec.x, y / vec.y};
 		}
+
+		bool operator==(Vector2 vec1){
+				return (x == vec1.x && y == vec1.y);
+		} 
 };
