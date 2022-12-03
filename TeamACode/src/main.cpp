@@ -11,6 +11,9 @@ Drive* DriveType = new Drive(tank);
 Drivetrain drivetrain(DriveType); 
 Roller roller;
 Endgame endgame;
+pros::Motor cata1 = {2};
+pros::Motor cata2 = {3};
+Catapult cata = {cata1, cata2};
 
 //Robot robot = Robot(&drivetrain, &roller, &endgame);
 
@@ -113,11 +116,9 @@ void opcontrol() {
 		else {
 			endgame.Off();
 		}
-		//drivetrain.odomTick();
-		
-		/*string position = to_string(drivetrain.pos.x) + " " + to_string(drivetrain.pos.y ) + " " + to_string(drivetrain.theta) + " " + to_string(drivetrain.ifID) + " "  + to_string(drivetrain.publicDeltaLeft) + " " + to_string(drivetrain.publicDeltaRight);
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
+			cata.Cycle();
+		}
 
-		std::cout << position << std::endl;*/
-		//pros::delay(10);
 	}
 }
