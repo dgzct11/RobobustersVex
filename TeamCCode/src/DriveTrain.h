@@ -14,6 +14,7 @@ class DriveTrain{
     Motor_Group rightMotor = Motor_Group({rightFront, rightBack});
 
     DriveTrain(){
+        leftMotor.set_reversed(true);
         leftMotor.set_brake_modes(E_MOTOR_BRAKE_HOLD);
         rightMotor.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 

@@ -7,15 +7,14 @@
 #include "Odom.h"
 #include "pros/misc.h"
 #include "Endgame.h"
-#include "Pneumatics.h"
 
 DriveTrain driveTrain;
 Roller roller;
 Launcher launcher;
 Flywheel flywheel;
 Odom odom;
-Endgame endgame;
-Pneumatics pneumatics;
+ADIDigitalOut indexer = ADIDigitalOut(INDEXER_PORT);
+ADIDigitalOut endgame = ADIDigitalOut(ENDGAME_PORT);
 
 /**
  * A callback function for LLEMU's center button.
@@ -136,22 +135,22 @@ void opcontrol() {
 			roller.stop();
 		}
 
-		if(master.get_digital(DIGITAL_X)){
-			endgame.launch();
+
+		if(master.get_digital(DIGITAL_LEFT)){
+			flywheel.spin();
 		}
-		else if(master.get_digital(DIGITAL_Y)){
-			endgame.reverse();
+		else if(master.get_digital(DIGITAL_RIGHT)){
+			flywheel.spinReverse();
 		}
-		else{
-			endgame.stop();
+		else if(master.get_digital(DIGITAL_DOWN)){
+			flywheel.stop();
 		}
 
-		if(master.get_digital(DIGITAL_A)){
-			odom.reset();
-		}
 		
-		pneumatics.setValue(master.get_digital(DIGITAL_UP));
-		
+		indexer.set_value(master.get_digital(DIGITAL_UP));
+
+		endgame.set_value(DIGITAL_A);
+
 
 		pros::delay(20);
 	}

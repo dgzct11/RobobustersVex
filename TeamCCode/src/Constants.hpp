@@ -18,9 +18,8 @@
 #define RIGHT_ODOM_1 'E'
 #define RIGHT_ODOM_2 'F'
 
-#define FLYWHEEL_LEFT 4
-#define FLYWHEEL_RIGHT 5
+#define FLYWHEEL 5
 
-#define ENDGAME_PORT 13
+#define ENDGAME_PORT 3
 
-#define PNEUMATICS_PORT 7
+#define INDEXER_PORT 7
