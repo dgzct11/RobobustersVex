@@ -76,9 +76,9 @@ void competition_initialize() {}
  */
 void autonomous() {
 	
-	driveTrain.tankDrive(-200,-200);
+	driveTrain.tankDrive(-1000,-1000);
 	pros::delay(20);  
-	roller.spinAuto(127);
+	roller.spinAuto(4000);
 	driveTrain.tankDrive(0, 0);
 	roller.stop();
 }
@@ -151,7 +151,7 @@ void opcontrol() {
 		
 		indexer.set_value(master.get_digital(DIGITAL_UP));
 
-		endgame.set_value(DIGITAL_A);
+		endgame.set_value(master.get_digital(DIGITAL_A));
 
 
 		pros::delay(20);

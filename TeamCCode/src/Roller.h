@@ -23,7 +23,7 @@ class Roller{
         rollerMotor.move_velocity(0);
     }
     void spinAuto(int amount){
-        rollerMotor.move(amount);
+        rollerMotor.move_velocity(amount);
     }
     int getPosition(){
         return rollerMotor.get_position();
