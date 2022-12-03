@@ -19,7 +19,9 @@ class Catapult{
 		void Cycle(){
 			catapult.move(127);
 
-			while(!bumper.get_value()){}
+			while(!bumper.get_value()){
+				pros::Sleep(10);
+			}
 			catapult.move(0);
 		}
 };
