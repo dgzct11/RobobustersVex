@@ -3,10 +3,18 @@
 #include <string>
 #include "Roller.h"
 #include "Launcher.h"
+#include "Flywheel.h"
+#include "Odom.h"
+#include "pros/misc.h"
+#include "Endgame.h"
 
 DriveTrain driveTrain;
 Roller roller;
 Launcher launcher;
+Flywheel flywheel;
+Odom odom;
+ADIDigitalOut indexer = ADIDigitalOut(INDEXER_PORT);
+ADIDigitalOut endgame = ADIDigitalOut(ENDGAME_PORT);
 
 /**
  * A callback function for LLEMU's center button.
@@ -68,8 +76,9 @@ void competition_initialize() {}
  */
 void autonomous() {
 	
-	driveTrain.tankDrive(-30,-30);
-	roller.spinAuto(127);
+	driveTrain.tankDrive(-1000,-1000);
+	pros::delay(20);  
+	roller.spinAuto(4000);
 	driveTrain.tankDrive(0, 0);
 	roller.stop();
 }
@@ -112,6 +121,8 @@ void opcontrol() {
 	
 
 	while (true) {
+		std::cout << roller.getPosition() << std::endl;
+
 		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
 		if(master.get_digital(DIGITAL_R1)){
@@ -126,24 +137,23 @@ void opcontrol() {
 			roller.stop();
 		}
 
-		if(master.get_digital(DIGITAL_X))
-		{
-			launcher.trigger();
+
+		if(master.get_digital(DIGITAL_LEFT)){
+			flywheel.spin();
 		}
-		else{
-			launcher.hold();
+		else if(master.get_digital(DIGITAL_RIGHT)){
+			flywheel.spinReverse();
+		}
+		else if(master.get_digital(DIGITAL_DOWN)){
+			flywheel.stop();
 		}
 
-		if(master.get_digital(DIGITAL_B)){
-			launcher.release();
-		}
-		else{
-			launcher.holdRelease();
-		}
 		
-		
+		indexer.set_value(master.get_digital(DIGITAL_UP));
 
-		
+		endgame.set_value(master.get_digital(DIGITAL_A));
+
+
 		pros::delay(20);
 	}
 }

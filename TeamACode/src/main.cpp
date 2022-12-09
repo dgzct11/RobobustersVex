@@ -1,6 +1,9 @@
 #include "main.h"
 #include "Robot.hpp"
 #include "Drivetrain.hpp"
+#include "pros/misc.h"
+#include "pros/motors.h"
+#include "pros/motors.hpp"
 #include <string>
 #include <iostream>
 
@@ -10,7 +13,11 @@ Drive* DriveType = new Drive(tank);
 
 Drivetrain drivetrain(DriveType); 
 Roller roller;
-Endgame endgame;
+//Endgame endgame;
+ADIDigitalOut endgame = ADIDigitalOut(ENDGAME_PORT);
+pros::Motor cata1 = Motor(19);
+pros::Motor cata2 = Motor(20, true);
+pros::Motor_Group cata = Motor_Group({cata1,cata2});
 
 //Robot robot = Robot(&drivetrain, &roller, &endgame);
 
@@ -107,17 +114,24 @@ void opcontrol() {
 		else {
 			roller.stop();
 		}
+		/*
 		if(master.get_digital(E_CONTROLLER_DIGITAL_X)){
 			endgame.Shoot();
 		}
 		else {
 			endgame.Off();
 		}
-		//drivetrain.odomTick();
-		
-		/*string position = to_string(drivetrain.pos.x) + " " + to_string(drivetrain.pos.y ) + " " + to_string(drivetrain.theta) + " " + to_string(drivetrain.ifID) + " "  + to_string(drivetrain.publicDeltaLeft) + " " + to_string(drivetrain.publicDeltaRight);
+		*/
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
+			cata.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+			cata.move(127);
+		}else {
+			cata.move(0);
+			pros::delay(10);
+			cata.set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
+		}
 
-		std::cout << position << std::endl;*/
-		//pros::delay(10);
+		
+		endgame.set_value(master.get_digital(DIGITAL_X));
 	}
 }
