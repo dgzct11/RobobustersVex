@@ -2,7 +2,6 @@
 #include "DriveTrain.h"
 #include <string>
 #include "Roller.h"
-#include "Launcher.h"
 #include "Flywheel.h"
 #include "Odom.h"
 #include "pros/misc.h"
@@ -10,7 +9,6 @@
 
 DriveTrain driveTrain;
 Roller roller;
-Launcher launcher;
 Flywheel flywheel;
 Odom odom;
 ADIDigitalOut indexer = ADIDigitalOut(INDEXER_PORT);
