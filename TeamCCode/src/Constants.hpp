@@ -23,3 +23,6 @@
 #define ENDGAME_PORT 3
 
 #define INDEXER_PORT 7
+
+#define INTAKE_LEFT 12
+#define INTAKE_RIGHT 2

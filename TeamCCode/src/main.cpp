@@ -6,14 +6,15 @@
 #include "Odom.h"
 #include "pros/misc.h"
 #include "Endgame.h"
+#include "Intake.h"
 
-DriveTrain driveTrain;
-Roller roller;
+//DriveTrain driveTrain;
+/*Roller roller;
 Flywheel flywheel;
 Odom odom;
 ADIDigitalOut indexer = ADIDigitalOut(INDEXER_PORT);
 ADIDigitalOut endgame = ADIDigitalOut(ENDGAME_PORT);
-
+*.
 /**
  * A callback function for LLEMU's center button.
  *
@@ -74,11 +75,11 @@ void competition_initialize() {}
  */
 void autonomous() {
 	
-	driveTrain.tankDrive(-1000,-1000);
+	/*driveTrain.tankDrive(-1000,-1000);
 	pros::delay(20);  
 	roller.spinAuto(4000);
 	driveTrain.tankDrive(0, 0);
-	roller.stop();
+	roller.stop();*/
 }
 
 /**
@@ -114,16 +115,17 @@ void opcontrol() {
 		//pros::lcd::set_text(2,positionPrint);
 	}
 	*/
+	Intake intake;
 	
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	
 
 	while (true) {
-		std::cout << roller.getPosition() << std::endl;
+		//std::cout << roller.getPosition() << std::endl;
 
-		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+		//driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
-		if(master.get_digital(DIGITAL_R1)){
+		/*if(master.get_digital(DIGITAL_R1)){
 			roller.spin();
 		}
 		else if(master.get_digital(DIGITAL_R2))
@@ -145,12 +147,21 @@ void opcontrol() {
 		else if(master.get_digital(DIGITAL_DOWN)){
 			flywheel.stop();
 		}
+*/
+		if(master.get_digital(DIGITAL_L1)){
+			intake.Spin();
+		}else if(master.get_digital(DIGITAL_L2)){
+			intake.SpinOpp();
+		}
+		else{
+			intake.Stop();
+		}
 
 		
-		indexer.set_value(master.get_digital(DIGITAL_UP));
+		/*indexer.set_value(master.get_digital(DIGITAL_UP));
 
 		endgame.set_value(master.get_digital(DIGITAL_A));
-
+*/
 
 		pros::delay(20);
 	}
