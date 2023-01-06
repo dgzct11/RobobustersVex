@@ -7,14 +7,16 @@
 #include "pros/misc.h"
 #include "Endgame.h"
 #include "Intake.h"
+#include "Indexer.hpp"
 
-//DriveTrain driveTrain;
-/*Roller roller;
+DriveTrain driveTrain;
+Roller roller;
 Flywheel flywheel;
-Odom odom;
-ADIDigitalOut indexer = ADIDigitalOut(INDEXER_PORT);
+Intake intake;
+Indexer indexer;
+//Odom odom;
 ADIDigitalOut endgame = ADIDigitalOut(ENDGAME_PORT);
-*.
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -115,17 +117,16 @@ void opcontrol() {
 		//pros::lcd::set_text(2,positionPrint);
 	}
 	*/
-	Intake intake;
+	
 	
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	
 
 	while (true) {
-		//std::cout << roller.getPosition() << std::endl;
 
-		//driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
-		/*if(master.get_digital(DIGITAL_R1)){
+		if(master.get_digital(DIGITAL_R1)){
 			roller.spin();
 		}
 		else if(master.get_digital(DIGITAL_R2))
@@ -147,7 +148,7 @@ void opcontrol() {
 		else if(master.get_digital(DIGITAL_DOWN)){
 			flywheel.stop();
 		}
-*/
+
 		if(master.get_digital(DIGITAL_L1)){
 			intake.Spin();
 		}else if(master.get_digital(DIGITAL_L2)){
@@ -157,11 +158,21 @@ void opcontrol() {
 			intake.Stop();
 		}
 
+		if(master.get_digital(DIGITAL_X)){
+			indexer.Spin();
+		}
+		else{
+			indexer.Stop();
+		}
 		
-		/*indexer.set_value(master.get_digital(DIGITAL_UP));
+		if(master.get_digital(DIGITAL_Y)){
+			indexer.Reset();
+		}
 
 		endgame.set_value(master.get_digital(DIGITAL_A));
-*/
+
+		std::string thingy = std::to_string((int)indexer.indexer.get_position() % 300);
+        pros::lcd::set_text(1, thingy);
 
 		pros::delay(20);
 	}
