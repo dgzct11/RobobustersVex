@@ -39,7 +39,7 @@ class Indexer{
             pros::delay(10);
         }
     }
-    void Stop(){
+    void Stop(){  
         indexer.move(0);
     }
 
