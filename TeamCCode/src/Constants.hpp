@@ -19,7 +19,7 @@
 #define INDEXER 3
 
 // 
-#define ENDGAME_PORT 3
+#define ENDGAME_PORT 1
 
 
 #define BACK_ODOM_1 1
