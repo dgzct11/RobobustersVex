@@ -8,14 +8,14 @@ using namespace Constants;
 
 class Intake {
     private:
-        Motor intakeL = Motor(intakeL_p);
-        Motor intakeR = Motor(intakeR_p);
-        Motor_Group intake = Motor_Group({intakeL, intakeR});
+        Motor intkL = Motor(intakeL_p);
+        Motor intkR = Motor(intakeR_p);
+        Motor_Group intk = Motor_Group({intkL, intkR});
     public:
         Intake() {
-            intake.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+            intk.set_brake_modes(E_MOTOR_BRAKE_HOLD);
         }
         inline void move(signed char voltage) {
-            intake.move(voltage);
+            intk.move(voltage);
         }
 };

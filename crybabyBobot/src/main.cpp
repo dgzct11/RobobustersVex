@@ -1,8 +1,12 @@
 #include "main.h"
+#include "pros/rtos.h"
 #include "systems/DriveTrain.hpp"
 #include "systems/Indexer.hpp"
 #include "systems/Extender.hpp"
+#include "systems/Flywheel.hpp"
+#include "systems/Intake.hpp"
 #include "autonomous/Odometry.hpp"
+#include <sys/_intsup.h>
 
 
 using namespace pros;
@@ -11,7 +15,9 @@ using namespace Display;
 Controller master(E_CONTROLLER_MASTER);
 
 DriveTrain dt = DriveTrain();
-Indexer index = Indexer();
+Flywheel fly = Flywheel();
+Intake intk = Intake();
+Indexer indx = Indexer();
 Extender xtend = Extender();
 
 LV_IMG_DECLARE(normal);
@@ -98,15 +104,11 @@ void autonomous() {
 	//odom.followPath();
 	if (rightSide) {
 		odom.followPath();
-		troll.move(127);
 		delay(1000);
-		troll.move(0);
 	} else {
 		dt.tankDrive(-69, -69);
-		troll.move(127);
 		delay(1000);
 		dt.tankDrive(0, 0);
-		troll.move(0);
 	}
 }
 
@@ -126,25 +128,26 @@ void autonomous() {
 void opcontrol() {
 	unsigned int startTime = millis();
 	unsigned int xChangeTime;
+	unsigned int nChangeTime;
 	bool xChange = false;
-	bool cPass = false;
+	bool nChange = false;
 	while (true) {
 		dt.teleMove();
 
-		if (master.get_digital(E_CONTROLLER_DIGITAL_R1)) {troll.move(127);}
-		else if (master.get_digital(E_CONTROLLER_DIGITAL_R2)) {troll.move(-127);}
-		else {troll.move(0);}
+		if (master.get_digital(E_CONTROLLER_DIGITAL_L1)) {intk.move(127);}
+		else if (master.get_digital(E_CONTROLLER_DIGITAL_L2)) {intk.move(-127);}
+		else {intk.move(0);}
+
+		if (master.get_digital(E_CONTROLLER_DIGITAL_UP)) {fly.move(127);}
+		else if (master.get_digital(E_CONTROLLER_DIGITAL_DOWN)) {fly.move(0);}
+
+		if (master.get_digital(E_CONTROLLER_DIGITAL_X)) {indx.launch(); nChange=true; nChangeTime=millis();}
+		else if (nChange && millis()-nChangeTime >= 500) {indx.reset(); nChange=false;}
 
 		if(millis()-startTime >= 90000){
 			if (master.get_digital(E_CONTROLLER_DIGITAL_A)) {xtend.set(true); xChange=true; xChangeTime=millis();}
-			if (xChange && millis()-xChangeTime >= 500) {xtend.set(false); xChange=false;}
+			else if (xChange && millis()-xChangeTime >= 500) {xtend.set(false); xChange=false;}
 		}
-
-		cPass = !master.get_digital(E_CONTROLLER_DIGITAL_B);
-
-		if (master.get_digital(E_CONTROLLER_DIGITAL_L1)) {cata.move(127,cPass);}
-		else if (master.get_digital(E_CONTROLLER_DIGITAL_L2)) {cata.move(-127,cPass);}
-		else {cata.move(0, true);}
 		
         delay(20);
     }

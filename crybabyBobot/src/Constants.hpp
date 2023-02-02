@@ -13,7 +13,7 @@ namespace Constants {
     static constexpr unsigned char intakeL_p = 12; // Port of the Left Intake motor
     static constexpr unsigned char intakeR_p = 2; // Port of the Right Intake motor
 
-    static constexpr unsigned char index_p = 7; // Port of Indexer
+    static constexpr unsigned char indx_p = 7; // Port of Indexer
     
     static constexpr unsigned char fly_p = 5; // Port of the Flywheel
 
