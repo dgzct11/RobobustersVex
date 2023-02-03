@@ -7,7 +7,7 @@
 #include "pros/misc.h"
 //#include "Endgame.h"
 #include "Intake.h"
-#include "Indexer.hpp"
+//#include "Indexer.hpp"
 #include <string.h>
 #include <bits/stdc++.h>
 #include <iostream>
@@ -16,10 +16,10 @@ using namespace pros;
 
 
 DriveTrain driveTrain;
-Roller roller;
+Roller indexer;
 Flywheel flywheel;
 Intake intake;
-Indexer indexer;
+//Indexer indexer;
 //Odom odom;
 ADIDigitalOut endgame = ADIDigitalOut(ENDGAME_PORT);
 
@@ -83,11 +83,13 @@ void competition_initialize() {}
  */
 void autonomous() {
 	
-	/*driveTrain.tankDrive(-1000,-1000);
+	driveTrain.tankDrive(-1000,-1000);
 	pros::delay(20);  
-	roller.spinAuto(4000);
 	driveTrain.tankDrive(0, 0);
-	roller.stop();*/
+	pros::delay(20);  
+	driveTrain.tankDrive(-1000,-1000);
+	pros::delay(20);
+	driveTrain.tankDrive(0, 0);
 }
 
 /**
@@ -130,20 +132,19 @@ void opcontrol() {
 
 	while (true) {
 
-		//driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
 		if(master.get_digital(DIGITAL_R1)){
-			roller.spin();
+			indexer.spin();
 		}
 		else if(master.get_digital(DIGITAL_R2))
 		{
-			roller.spinOpp();
+			indexer.spinOpp();
 		}
 		else
 		{
-			roller.stop();
+			indexer.stop();
 		}
-
 		
 		if(master.get_analog(ANALOG_LEFT_Y)>0){
 			flywheel.spin(master.get_analog(ANALOG_LEFT_Y));
@@ -154,8 +155,6 @@ void opcontrol() {
 		else if(master.get_digital(DIGITAL_DOWN)){
 			flywheel.stop();
 		}
-		std::string thingy = std::to_string(master.get_analog(ANALOG_LEFT_Y));
-        pros::lcd::set_text(1, thingy);
 
 		if(master.get_digital(DIGITAL_L1)){
 			intake.Spin();
@@ -165,7 +164,7 @@ void opcontrol() {
 		else{
 			intake.Stop();
 		}
-
+		/*
 		if(master.get_digital(DIGITAL_X)){
 			indexer.Spin();
 		}
@@ -176,6 +175,7 @@ void opcontrol() {
 		if(master.get_digital(DIGITAL_Y)){
 			indexer.Reset();
 		}
+		*/
 
 		endgame.set_value(master.get_digital(DIGITAL_A));
 
