@@ -130,7 +130,7 @@ void opcontrol() {
 
 	while (true) {
 
-		//driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
 		if(master.get_digital(DIGITAL_R1)){
 			roller.spin();
@@ -145,18 +145,16 @@ void opcontrol() {
 		}
 
 		
-		if(master.get_analog(ANALOG_LEFT_Y)>0){
-			flywheel.spin(master.get_analog(ANALOG_LEFT_Y));
+		if(master.get_digital(DIGITAL_RIGHT)){
+			flywheel.spin();
 		}
-		else if(master.get_analog(ANALOG_LEFT_Y)<0){
-			flywheel.spinReverse(master.get_analog(ANALOG_LEFT_Y));
+		else if(master.get_digital(DIGITAL_LEFT)){
+			flywheel.spinReverse();
 		}
 		else if(master.get_digital(DIGITAL_DOWN)){
 			flywheel.stop();
 		}
-		std::string thingy = std::to_string(master.get_analog(ANALOG_LEFT_Y));
-        pros::lcd::set_text(1, thingy);
-
+		
 		if(master.get_digital(DIGITAL_L1)){
 			intake.Spin();
 		}else if(master.get_digital(DIGITAL_L2)){
