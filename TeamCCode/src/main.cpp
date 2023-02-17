@@ -2,18 +2,25 @@
 #include "DriveTrain.h"
 #include <string>
 #include "Roller.h"
-#include "Launcher.h"
 #include "Flywheel.h"
 #include "Odom.h"
 #include "pros/misc.h"
-#include "Endgame.h"
+//#include "Endgame.h"
+#include "Intake.h"
+//#include "Indexer.hpp"
+#include <string.h>
+#include <bits/stdc++.h>
+#include <iostream>
+
+using namespace pros;
+
 
 DriveTrain driveTrain;
-Roller roller;
-Launcher launcher;
+Roller indexer;
 Flywheel flywheel;
-Odom odom;
-ADIDigitalOut indexer = ADIDigitalOut(INDEXER_PORT);
+Intake intake;
+//Indexer indexer;
+//Odom odom;
 ADIDigitalOut endgame = ADIDigitalOut(ENDGAME_PORT);
 
 /**
@@ -78,9 +85,11 @@ void autonomous() {
 	
 	driveTrain.tankDrive(-1000,-1000);
 	pros::delay(20);  
-	roller.spinAuto(4000);
 	driveTrain.tankDrive(0, 0);
-	roller.stop();
+	pros::delay(20);  
+	driveTrain.tankDrive(-1000,-1000);
+	pros::delay(20);
+	driveTrain.tankDrive(0, 0);
 }
 
 /**
@@ -117,42 +126,58 @@ void opcontrol() {
 	}
 	*/
 	
+	
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	
 
 	while (true) {
-		std::cout << roller.getPosition() << std::endl;
 
 		driveTrain.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
 		if(master.get_digital(DIGITAL_R1)){
-			roller.spin();
+			indexer.spin();
 		}
 		else if(master.get_digital(DIGITAL_R2))
 		{
-			roller.spinOpp();
+			indexer.spinOpp();
 		}
 		else
 		{
-			roller.stop();
+			indexer.stop();
 		}
-
-
-		if(master.get_digital(DIGITAL_LEFT)){
-			flywheel.spin();
+		
+		if(master.get_analog(ANALOG_LEFT_Y)>0){
+			flywheel.spin(master.get_analog(ANALOG_LEFT_Y));
 		}
-		else if(master.get_digital(DIGITAL_RIGHT)){
-			flywheel.spinReverse();
+		else if(master.get_analog(ANALOG_LEFT_Y)<0){
+			flywheel.spinReverse(master.get_analog(ANALOG_LEFT_Y));
 		}
 		else if(master.get_digital(DIGITAL_DOWN)){
 			flywheel.stop();
 		}
 
+		if(master.get_digital(DIGITAL_L1)){
+			intake.Spin();
+		}else if(master.get_digital(DIGITAL_L2)){
+			intake.SpinOpp();
+		}
+		else{
+			intake.Stop();
+		}
+		/*
+		if(master.get_digital(DIGITAL_X)){
+			indexer.Spin();
+		}
+		else{
+			indexer.Stop();
+		}
 		
-		indexer.set_value(master.get_digital(DIGITAL_UP));
+		if(master.get_digital(DIGITAL_Y)){
+			indexer.Reset();
+		}
+		*/
 
 		endgame.set_value(master.get_digital(DIGITAL_A));
-
 
 		pros::delay(20);
 	}
