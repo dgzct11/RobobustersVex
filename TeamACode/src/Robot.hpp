@@ -4,9 +4,9 @@
 #include "Drivetrain.hpp"
 #include "Roller.hpp"
 #include "Endgame.hpp"
-//#include "Catapult.hpp"
+#include "Catapult.hpp"
 
-class Robot{
+/*class Robot{
 	public:
 		//Vector2 pos;
 		Drivetrain* drivetrain;
@@ -27,6 +27,6 @@ class Robot{
 
 			return sqrt(pow(xDistance,2) + pow(yDistance, 2));
 		}
-		*/
-};
+		
+};*/
 
