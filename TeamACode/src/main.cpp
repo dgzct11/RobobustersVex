@@ -1,9 +1,7 @@
 #include "main.h"
 #include "Robot.hpp"
 #include "Drivetrain.hpp"
-#include "pros/misc.h"
-#include "pros/motors.h"
-#include "pros/motors.hpp"
+#include "Catapult.hpp"
 #include <string>
 #include <iostream>
 
@@ -15,13 +13,11 @@ Drivetrain drivetrain(DriveType);
 Roller roller;
 //Endgame endgame;
 ADIDigitalOut endgame = ADIDigitalOut(ENDGAME_PORT);
-pros::Motor cata1 = Motor(19);
-pros::Motor cata2 = Motor(20, true);
-pros::Motor_Group cata = Motor_Group({cata1,cata2});
+Catapult cata;
 
 //Robot robot = Robot(&drivetrain, &roller, &endgame);
 
-/**
+/*
  * A callback function for LLEMU's center button.
  *
  * When this callback is fired, it will toggle line 2 of the LCD text between
@@ -80,12 +76,22 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	roller.spin(127);
-	delay(300);
-	drivetrain.move(30);
-	delay(250);
-	drivetrain.move(0);
-	roller.stop();
+	drivetrain.move_ticks(500, 100);
+	// delay(500);
+	// drivetrain.stop();
+	// delay(500);
+	// drivetrain.turn(50);
+	// delay(200);
+	// drivetrain.move(100);
+	//delay(500);
+	//Should be in center of field now
+	
+	//roller.spin(127);
+	//delay(300);
+	//drivetrain.move(30);
+	//delay(250);
+	//drivetrain.move(0);
+	//roller.stop();
 }
 
 /**
@@ -122,16 +128,13 @@ void opcontrol() {
 			endgame.Off();
 		}
 		*/
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
-			cata.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
-			cata.move(127);
-		}else {
-			cata.move(0);
-			pros::delay(10);
-			cata.set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
-		}
 
-		
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+			cata.catapult.move(127);
+			//cata.Shoot();
+		}else{
+			cata.catapult.move(0);
+		}
 		endgame.set_value(master.get_digital(DIGITAL_X));
 	}
 }

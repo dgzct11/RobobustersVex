@@ -9,7 +9,7 @@
 using namespace pros;
 class Endgame{
 	public:
-	Motor endgame = Motor(ENDGAME_PORT);
+	/*Motor endgame = Motor(ENDGAME_PORT);
 	Motor release = Motor(RELEASE_PORT);
 	
 
@@ -22,5 +22,5 @@ class Endgame{
 	void Off(){
 		endgame.move(0);
 		release.move(0);
-	}
+	}*/
 };
