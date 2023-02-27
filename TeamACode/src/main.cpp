@@ -1,21 +1,21 @@
 #include "main.h"
-#include "Robot.hpp"
-#include "Drivetrain.hpp"
 #include "Catapult.hpp"
-#include <string>
+#include "Drivetrain.hpp"
+#include "Robot.hpp"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-Drive* DriveType = new Drive(tank);
+Drive *DriveType = new Drive(tank);
 
-Drivetrain drivetrain(DriveType); 
+Drivetrain drivetrain(DriveType);
 Roller roller;
-//Endgame endgame;
+// Endgame endgame;
 ADIDigitalOut endgame = ADIDigitalOut(ENDGAME_PORT);
 Catapult cata;
 
-//Robot robot = Robot(&drivetrain, &roller, &endgame);
+// Robot robot = Robot(&drivetrain, &roller, &endgame);
 
 /*
  * A callback function for LLEMU's center button.
@@ -24,13 +24,13 @@ Catapult cata;
  * "I was pressed!" and nothing.
  */
 void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
+  static bool pressed = false;
+  pressed = !pressed;
+  if (pressed) {
+    pros::lcd::set_text(2, "I was pressed!");
+  } else {
+    pros::lcd::clear_line(2);
+  }
 }
 
 /**
@@ -40,10 +40,9 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
+  pros::lcd::initialize();
 
-	pros::lcd::register_btn1_cb(on_center_button);
-
+  pros::lcd::register_btn1_cb(on_center_button);
 }
 
 /**
@@ -76,22 +75,15 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	drivetrain.move_ticks(500, 100);
-	// delay(500);
-	// drivetrain.stop();
-	// delay(500);
-	// drivetrain.turn(50);
-	// delay(200);
-	// drivetrain.move(100);
-	//delay(500);
-	//Should be in center of field now
-	
-	//roller.spin(127);
-	//delay(300);
-	//drivetrain.move(30);
-	//delay(250);
-	//drivetrain.move(0);
-	//roller.stop();
+  drivetrain.PIDMove(100);
+  std::cout << "Finished auton" << std::endl;
+
+  // roller.spin(127);
+  // delay(300);
+  // drivetrain.move(30);
+  // delay(250);
+  // drivetrain.move(0);
+  // roller.stop();
 }
 
 /**
@@ -108,33 +100,32 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	Controller master (CONTROLLER_MASTER);
-	while (true) {
-		drivetrain.update(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-			roller.spin(127);
-		}
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-			roller.spin(-127);
-		}
-		else {
-			roller.stop();
-		}
-		/*
-		if(master.get_digital(E_CONTROLLER_DIGITAL_X)){
-			endgame.Shoot();
-		}
-		else {
-			endgame.Off();
-		}
-		*/
+  Controller master(CONTROLLER_MASTER);
+  while (true) {
+    drivetrain.update(master.get_analog(ANALOG_LEFT_Y),
+                      master.get_analog(ANALOG_RIGHT_Y));
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+      roller.spin(127);
+    } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+      roller.spin(-127);
+    } else {
+      roller.stop();
+    }
+    /*
+    if(master.get_digital(E_CONTROLLER_DIGITAL_X)){
+            endgame.Shoot();
+    }
+    else {
+            endgame.Off();
+    }
+    */
 
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-			cata.catapult.move(127);
-			//cata.Shoot();
-		}else{
-			cata.catapult.move(0);
-		}
-		endgame.set_value(master.get_digital(DIGITAL_X));
-	}
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+      cata.catapult.move(127);
+      // cata.Shoot();
+    } else {
+      cata.catapult.move(0);
+    }
+    endgame.set_value(master.get_digital(DIGITAL_X));
+  }
 }
