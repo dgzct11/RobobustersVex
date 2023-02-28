@@ -9,7 +9,7 @@
 #define RIGHT_FRONT_PORT 11
 
 #define ROLLER_PORT 7
-#define ROLLER_VOLTAGE 75
+#define ROLLER_VOLTAGE 50
 
 #define FLYWHEEL 5
 

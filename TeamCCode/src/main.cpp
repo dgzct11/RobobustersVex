@@ -146,16 +146,20 @@ void opcontrol() {
 			indexer.stop();
 		}
 		
-		if(master.get_analog(ANALOG_LEFT_Y)>0){
-			flywheel.spin(master.get_analog(ANALOG_LEFT_Y));
+		if(master.get_digital(DIGITAL_RIGHT)){
+			flywheel.spin();
 		}
-		else if(master.get_analog(ANALOG_LEFT_Y)<0){
-			flywheel.spinReverse(master.get_analog(ANALOG_LEFT_Y));
+		else if(master.get_digital(DIGITAL_LEFT)){
+			flywheel.spinReverse();
 		}
 		else if(master.get_digital(DIGITAL_DOWN)){
 			flywheel.stop();
 		}
+<<<<<<< HEAD
+		
+=======
 
+>>>>>>> 3e568d1898123ba24713835468d139025593a868
 		if(master.get_digital(DIGITAL_L1)){
 			intake.Spin();
 		}else if(master.get_digital(DIGITAL_L2)){
