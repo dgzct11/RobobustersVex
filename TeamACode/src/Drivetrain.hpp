@@ -31,6 +31,9 @@ public:
     right.move(velocity);
   }
 
+		void move_ticks(uint16_t ticks, double velocity){
+			double left_pos = 0.0;
+			double right_pos = 0.0;
   void PIDMove(float distance) {
     float ValueLeft = left.get_positions()[0];
     float ValueRight = right.get_positions()[0];
@@ -50,22 +53,19 @@ public:
       error = distance - AverageValueEncoder;
       integral += error;
 
-      if (error == 0) {
-        integral = 0;
-      }
-      if (fabs(error) > 40) {
-        integral = 0;
-      }
-
-      derivative = error - prevError;
-
-      prevError = error;
-      speed = (kP * error) + (kI * integral) + (kD * derivative);
-
-      left.move_voltage(speed);
-      right.move_voltage(speed);
-    }
-  }
+			while(left_pos <= ticks && right_pos <= ticks){
+				if(left_pos > right_pos){
+					left.move(velocity - 20);
+					right.move(velocity + 20);
+				}else if(left_pos < right_pos){
+					left.move(velocity + 20);
+					right.move(velocity - 20);
+				}else{
+					left.move(velocity);
+					right.move(velocity);
+				}
+			}
+		}
 
   void stop() {
     left.move(0);
