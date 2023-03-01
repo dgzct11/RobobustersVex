@@ -33,10 +33,14 @@ class Drivetrain{
 		}
 
 		void move_ticks(uint16_t ticks, double velocity){
-			double left_pos = (left.get_positions()[0] + left.get_positions()[1]) / 2;
-			double right_pos = (right.get_positions()[0] + right.get_positions()[1]) / 2;
+			double left_pos = 0.0;
+			double right_pos = 0.0;
 
 			while(left_pos <= ticks && right_pos <= ticks){
+
+				left_pos = (left.get_positions()[0] + left.get_positions()[1]) / 2;
+				right_pos = (right.get_positions()[0] + right.get_positions()[1]) / 2;
+				std:cout << left_pos << " " << right_pos << std::endl;
 				if(left_pos > right_pos){
 					left.move(velocity - 20);
 					right.move(velocity + 20);
