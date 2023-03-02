@@ -12,11 +12,11 @@ class Flywheel{
     }
 
     void spin(){
-        flywheel.move_velocity(-150);
+        flywheel.move_velocity(-127);
     }
 
     void spinReverse(){
-        flywheel.move_velocity(150);
+        flywheel.move_velocity(127);
     }
 
     void stop(){
@@ -26,4 +26,5 @@ class Flywheel{
     void spinAuton(int vel){
         flywheel.move_velocity(-vel);
     }
+    
 };

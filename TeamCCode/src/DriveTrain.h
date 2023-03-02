@@ -32,5 +32,38 @@ class DriveTrain{
     bool overThreshhold(int value)
     {
         return (abs(value)>=1);
+    
     }
+    void PIDMove(float distance) {
+    float ValueLeft = left.get_positions()[0];
+    float ValueRight = right.get_positions()[0];
+    float AverageValueEncoder;
+
+    float integral;
+    float derivative;
+
+    float error;
+    float prevError;
+    float speed;
+
+    while (fabs(error) > 0.1) {
+      AverageValueEncoder = (((float)left.get_positions()[0]) - ValueLeft) +
+                            ((float)right.get_positions()[0] - ValueRight) / 2;
+
+      error = distance - AverageValueEncoder;
+      integral += error;
+
+                        while(left_pos <= ticks && right_pos <= ticks){
+                                if(left_pos > right_pos){
+                                        left.move(velocity - 20);
+                                        right.move(velocity + 20);
+                                }else if(left_pos < right_pos){
+                                        left.move(velocity + 20);
+                                        right.move(velocity - 20);
+                                }else{
+                                        left.move(velocity);
+                                        right.move(velocity);
+                                }
+                        }
+                }
 }; 
