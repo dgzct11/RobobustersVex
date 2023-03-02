@@ -76,8 +76,8 @@ bin/main.cpp.o: src/main.cpp include/main.h include/api.h \
  include/pros/rotation.hpp include/pros/rotation.h include/pros/rtos.hpp \
  include/pros/screen.hpp include/pros/screen.h include/pros/vision.hpp \
  include/pros/vision.h include/pros/link.hpp include/pros/link.h \
- src/Robot.hpp src/Utils.hpp src/Drivetrain.hpp src/Constants.hpp \
- src/Roller.hpp src/Endgame.hpp include/pros/motors.hpp src/Catapult.hpp
+ src/Catapult.hpp src/Constants.hpp src/Drivetrain.hpp src/Utils.hpp \
+ src/Robot.hpp src/Endgame.hpp include/pros/motors.hpp src/Roller.hpp
 include/main.h:
 include/api.h:
 include/pros/adi.h:
@@ -231,11 +231,11 @@ include/pros/vision.hpp:
 include/pros/vision.h:
 include/pros/link.hpp:
 include/pros/link.h:
-src/Robot.hpp:
-src/Utils.hpp:
-src/Drivetrain.hpp:
+src/Catapult.hpp:
 src/Constants.hpp:
-src/Roller.hpp:
+src/Drivetrain.hpp:
+src/Utils.hpp:
+src/Robot.hpp:
 src/Endgame.hpp:
 include/pros/motors.hpp:
-src/Catapult.hpp:
+src/Roller.hpp:
