@@ -19,4 +19,7 @@ class Intake{
     void Stop(){
         intake.move(0);
     }
+    void SpinIndex(){
+        intake.move(-75);
+    }
 };

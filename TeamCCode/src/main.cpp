@@ -83,13 +83,41 @@ void competition_initialize() {}
  */
 void autonomous() {
 	
-	driveTrain.tankDrive(-1000,-1000);
-	pros::delay(20);  
+	driveTrain.tankDrive(-50,-50);
+	pros::delay(600);
+	driveTrain.tankDrive(0,  0);
+	driveTrain.tankDrive(0, -50);
+	pros::delay(1200);	
 	driveTrain.tankDrive(0, 0);
-	pros::delay(20);  
-	driveTrain.tankDrive(-1000,-1000);
-	pros::delay(20);
+
+	intake.SpinOpp();
+	pros::delay(100);
+	intake.Stop();
+
+	driveTrain.tankDrive(30, 0);
+	pros::delay(600);
+	driveTrain.tankDrive(0,0);
+	driveTrain.tankDrive(30, 30);
+	pros::delay(400);
 	driveTrain.tankDrive(0, 0);
+	driveTrain.tankDrive(50, 0);
+	pros::delay(200);
+	driveTrain.tankDrive(0, 0);
+
+	
+	flywheel.spinAuton(200);
+	pros::delay(200);
+	intake.Spin();
+	indexer.spin();
+	pros::delay(1000);
+	indexer.stop();
+	intake.Stop();
+	pros::delay(1000);
+	flywheel.stop();
+	
+
+
+	
 }
 
 /**
@@ -155,11 +183,6 @@ void opcontrol() {
 		else if(master.get_digital(DIGITAL_DOWN)){
 			flywheel.stop();
 		}
-<<<<<<< HEAD
-		
-=======
-
->>>>>>> 3e568d1898123ba24713835468d139025593a868
 		if(master.get_digital(DIGITAL_L1)){
 			intake.Spin();
 		}else if(master.get_digital(DIGITAL_L2)){
@@ -168,6 +191,7 @@ void opcontrol() {
 		else{
 			intake.Stop();
 		}
+
 		/*
 		if(master.get_digital(DIGITAL_X)){
 			indexer.Spin();
