@@ -20,8 +20,9 @@
 #define RELEASE_PORT 'A'
 
 #define pi 3.14159265359
-#define kP 0
-#define kI 0
+#define kP 7
+#define kI 3
 #define kD 0
+#define kT 1.5//turn ration
 
 

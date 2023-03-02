@@ -75,8 +75,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-  drivetrain.PIDMove(100);
-  std::cout << "Finished auton" << std::endl;
+  drivetrain.PIDMove(5000);
 
   // roller.spin(127);
   // delay(300);

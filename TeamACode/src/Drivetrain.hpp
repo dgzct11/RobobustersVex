@@ -4,6 +4,7 @@
 #include "Utils.hpp"
 #include "main.h"
 #include <string>
+#include <iostream>
 
 using namespace pros;
 using namespace std;
@@ -30,41 +31,43 @@ public:
     left.move(velocity);
     right.move(velocity);
   }
+  void PIDMove(double distance) {
+    left.tare_position();
+    right.tare_position();
+    
+    double AverageLeft = 0.0;
+    double AverageRight = 0.0;
+    double AverageValueEncoder = 0.0;
 
-		void move_ticks(uint16_t ticks, double velocity){
-			double left_pos = 0.0;
-			double right_pos = 0.0;
-  void PIDMove(float distance) {
-    float ValueLeft = left.get_positions()[0];
-    float ValueRight = right.get_positions()[0];
-    float AverageValueEncoder;
+    double integral = 0.0;
+    double derivative = 0.0;
 
-    float integral;
-    float derivative;
-
-    float error;
-    float prevError;
-    float speed;
-
-    while (fabs(error) > 0.1) {
-      AverageValueEncoder = (((float)left.get_positions()[0]) - ValueLeft) +
-                            ((float)right.get_positions()[0] - ValueRight) / 2;
+    double error = distance;
+    double prevError;
+    double speed;
+    while (fabs(error) > 0.2) {
+      AverageLeft = (left.get_positions()[0] + left.get_positions()[1] + 1.0) / 2;
+      AverageRight = (right.get_positions()[0] + right.get_positions()[1] + 1.0) / 2;
+      
+      AverageValueEncoder = (AverageLeft + AverageRight) / 2;
 
       error = distance - AverageValueEncoder;
       integral += error;
 
-			while(left_pos <= ticks && right_pos <= ticks){
-				if(left_pos > right_pos){
-					left.move(velocity - 20);
-					right.move(velocity + 20);
-				}else if(left_pos < right_pos){
-					left.move(velocity + 20);
-					right.move(velocity - 20);
-				}else{
-					left.move(velocity);
-					right.move(velocity);
-				}
-			}
+      if (fabs(error) > 40) {
+        integral = 0;
+      }
+
+      derivative = error - prevError;
+
+      prevError = error;
+      speed = clamp((kP * error) + (kI * integral) + (kD * derivative), -11500.0, 11500.0);
+
+      std::cout << AverageLeft << " " << AverageRight << " " << AverageValueEncoder << " " << speed << std::endl;
+      std::cout << (speed * AverageValueEncoder/AverageLeft) << " " << (speed * AverageValueEncoder / AverageRight) << std::endl;
+      left.move_voltage(speed * kT * (AverageValueEncoder/AverageLeft));
+      right.move_voltage(speed * kT * (AverageValueEncoder/AverageRight));
+    }
 		}
 
   void stop() {
