@@ -76,6 +76,7 @@ void competition_initialize() {}
  */
 void autonomous() {
   drivetrain.PIDMove(5000);
+  drivetrain.PIDTurn(900);
 
   // roller.spin(127);
   // delay(300);

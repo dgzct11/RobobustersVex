@@ -3,8 +3,8 @@
 #include "Constants.hpp"
 #include "Utils.hpp"
 #include "main.h"
-#include <string>
 #include <iostream>
+#include <string>
 
 using namespace pros;
 using namespace std;
@@ -34,7 +34,7 @@ public:
   void PIDMove(double distance) {
     left.tare_position();
     right.tare_position();
-    
+
     double AverageLeft = 0.0;
     double AverageRight = 0.0;
     double AverageValueEncoder = 0.0;
@@ -45,10 +45,12 @@ public:
     double error = distance;
     double prevError;
     double speed;
-    while (fabs(error) > 0.2) {
-      AverageLeft = (left.get_positions()[0] + left.get_positions()[1] + 1.0) / 2;
-      AverageRight = (right.get_positions()[0] + right.get_positions()[1] + 1.0) / 2;
-      
+    while (fabs(error) > 0.1) {
+      AverageLeft =
+          (left.get_positions()[0] + left.get_positions()[1] + 1.0) / 2;
+      AverageRight =
+          (right.get_positions()[0] + right.get_positions()[1] + 1.0) / 2;
+
       AverageValueEncoder = (AverageLeft + AverageRight) / 2;
 
       error = distance - AverageValueEncoder;
@@ -61,14 +63,53 @@ public:
       derivative = error - prevError;
 
       prevError = error;
-      speed = clamp((kP * error) + (kI * integral) + (kD * derivative), -11500.0, 11500.0);
+      speed = clamp((kP * error) + (kI * integral) + (kD * derivative),
+                    -11500.0, 11500.0);
 
-      std::cout << AverageLeft << " " << AverageRight << " " << AverageValueEncoder << " " << speed << std::endl;
-      std::cout << (speed * AverageValueEncoder/AverageLeft) << " " << (speed * AverageValueEncoder / AverageRight) << std::endl;
-      left.move_voltage(speed * kT * (AverageValueEncoder/AverageLeft));
-      right.move_voltage(speed * kT * (AverageValueEncoder/AverageRight));
+      left.move_voltage(speed * kT * (AverageValueEncoder / AverageLeft));
+      right.move_voltage(speed * kT * (AverageValueEncoder / AverageRight));
     }
-		}
+  }
+
+  void PIDTurn(double angle) {
+    left.tare_position();
+    right.tare_position();
+
+    double AverageLeft = 0.0;
+    double AverageRight = 0.0;
+    double AverageValueEncoder = 0.0;
+
+    double integral = 0.0;
+    double derivative = 0.0;
+
+    double error = angle;
+    double prevError;
+    double speed;
+    while (fabs(error) > 0.1) {
+      AverageLeft =
+          (left.get_positions()[0] + left.get_positions()[1] + 1.0) / 2;
+      AverageRight =
+          (right.get_positions()[0] + right.get_positions()[1] + 1.0) / 2;
+
+      AverageValueEncoder = (AverageLeft + AverageRight) / 2;
+
+      error = angle - AverageValueEncoder;
+      integral += error;
+
+      if (fabs(error) > 40) {
+        integral = 0;
+      }
+
+      derivative = error - prevError;
+
+      prevError = error;
+      speed = clamp((kP * error) + (kI * integral) + (kD * derivative),
+                    -11500.0, 11500.0);
+
+      left.move_voltage(speed * kT * (AverageValueEncoder / AverageLeft));
+      right.move_voltage(-speed * kT * (AverageValueEncoder / AverageRight));
+    }
+  }
 
   void stop() {
     left.move(0);
