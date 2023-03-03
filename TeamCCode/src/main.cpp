@@ -82,7 +82,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	
+
 	driveTrain.tankDrive(-50,-50);
 	pros::delay(600);
 	driveTrain.tankDrive(0,  0);
@@ -91,6 +91,7 @@ void autonomous() {
 	driveTrain.tankDrive(0, 0);
 
 	intake.SpinOpp();
+	
 	pros::delay(100);
 	intake.Stop();
 
@@ -100,12 +101,12 @@ void autonomous() {
 	driveTrain.tankDrive(30, 30);
 	pros::delay(800);
 	driveTrain.tankDrive(0, 0);
+	flywheel.spinAuton(1800);
 	driveTrain.tankDrive(60, 0);
 	pros::delay(100);
 	driveTrain.tankDrive(0, 0);
 
 	
-	flywheel.spinAuton(2000);
 	intake.SpinOpp();
 	pros::delay(2000);
 	indexer.spinOpp();
