@@ -24,7 +24,7 @@
 #define kP 8
 #define kI 300
 #define kD 0
-#define kT 
+#define kT 1.5
 
 #define BACK_ODOM_1 1
 #define BACK_ODOM_2 2

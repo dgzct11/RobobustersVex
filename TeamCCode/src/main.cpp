@@ -98,14 +98,14 @@ void autonomous() {
 	pros::delay(600);
 	driveTrain.tankDrive(0,0);
 	driveTrain.tankDrive(30, 30);
-	pros::delay(700);
+	pros::delay(800);
 	driveTrain.tankDrive(0, 0);
-	driveTrain.tankDrive(50, 0);
+	driveTrain.tankDrive(60, 0);
 	pros::delay(100);
 	driveTrain.tankDrive(0, 0);
 
 	
-	flywheel.spinAuton(500);
+	flywheel.spinAuton(2000);
 	intake.SpinOpp();
 	pros::delay(2000);
 	indexer.spinOpp();

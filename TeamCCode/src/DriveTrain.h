@@ -49,8 +49,8 @@ class DriveTrain{
     double prevError;
     double speed;
     while (fabs(error) > 0.2) {
-      AverageLeft = (left.get_positions()[0] + left.get_positions()[1] + 1.0) / 2;
-      AverageRight = (right.get_positions()[0] + right.get_positions()[1] + 1.0) / 2;
+      AverageLeft = (leftMotor.get_positions()[0] + leftMotor.get_positions()[1] + leftMotor.get_positions()[2] + 1.0) / 3;
+      AverageRight = (rightMotor.get_positions()[0] + rightMotor.get_positions()[1] + rightMotor.get_positions()[2] + 1.0) / 3;
       
       AverageValueEncoder = (AverageLeft + AverageRight) / 2;
 
@@ -64,7 +64,7 @@ class DriveTrain{
       derivative = error - prevError;
 
       prevError = error;
-      speed = clamp((kP * error) + (kI * integral) + (kD * derivative), -11500.0, 11500.0);
+      speed = std::clamp((kP * error) + (kI * integral) + (kD * derivative), -11500.0, 11500.0);
 
       std::cout << AverageLeft << " " << AverageRight << " " << AverageValueEncoder << " " << speed << std::endl;
       std::cout << (speed * AverageValueEncoder/AverageLeft) << " " << (speed * AverageValueEncoder / AverageRight) << std::endl;
